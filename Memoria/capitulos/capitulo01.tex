@@ -1,0 +1,165 @@
+% !TeX root = ../tfg.tex
+% !TeX encoding = utf8
+
+\chapter{Transformada de Fourier Discreta}
+
+\section{Motivación}
+
+En este capítulo, deduciremos la Transformada Discreta de Fourier (DFT), una herramienta crucial en el procesamiento digital de señales.
+Existen diversas aproximaciones que derivan en la expresión de la DFT. 
+
+Esta definición podría darse directamente y luego tratar de enlazarla con el concepto que teníamos para funciones integrables en $\mathbb{R}$, sin embargo, se opta por tratar de desarrollar la intuición de la definicón de esta partiendo  del ámbito continuoya que proporcionar una conexión conceptual con el dominio continuo contribuye a una comprensión más profunda y coherente de la transformada discreta de Fourier.
+
+En cierta manera el lector puede pensar que trataremos de "transformar lo continuo en discreto".
+
+
+\section{1-DFT}
+
+Sea $f : \mathbb{R} \rightarrow  \mathbb{R}$  una función integrable en $\mathbb{R}$ que representará una señal. Haremos dos suposiciones acerca de esta.
+\begin{itemize}
+    \item Suponemos que \( f \) es de soporte compacto en \([0, L]\), donde \( L \in \mathbb{N} \).
+    \item Suponemos que \( f^* \) es de soporte compacto en  \([0, 2B]\), donde \( B \in \mathbb{N} \).
+\end{itemize}
+
+
+\noindent Estamos considerando  por tanto $f$ tanto limitada en el tiempo como limitada en banda, \textbf{sabiendo que esto solo puede ser aproximadamente cierto}. Sin embargo, finalmente vamos a llegar a una definición de una transformada discreta de Fourier que tendrá sentido por sí misma, independientemente de estas precarias suposiciones iniciales.
+
+\vspace{0.9mm}
+\underline{\textit{Paso1}}
+
+Tomamos $N$ muestras equiespaciadas de $f$  en $[0,L]$ con \[ N = \frac{L}{\frac{1}{2B}} = 2BL \].
+
+Obteniendo  los puntos
+\[ t_0 = 0, \quad t_1 = \frac{1}{2B}, \quad t_2 = \frac{2}{2B}, \ldots, t_{N-1} = \frac{N-1}{2B} \].
+
+Consideramos la versión discreta de \( f \) como la lista \( [f(t_0), f(t_1), \ldots, f(t_{N-1})] \). 
+
+
+
+
+
+
+En el contexto del \textbf{Teorema de Muestreo} es una buena elección como tasa de muestreo:
+
+\vspace{1.5cm}
+
+
+\noindent \underline{\textit{Paso2}}
+
+\noindent Sea \( g: \mathbb{R} \rightarrow \mathbb{R} \) definida como 
+\begin{equation}
+    g(t) = \sum_{n=0}^{N-1} \delta(t - t_n) \cdot f(t_n)
+\end{equation} 
+ es la versión discreta de $f$ definida en $\mathbb{R}$ 
+
+Construimos ahora $\widehat{g}$ como: 
+
+\begin{equation}
+    \widehat{g}(s) = \sum_{n=0}^{N-1} f(t_n)  \cdot \widehat{\delta}(t - t_n) = \sum_{n=0}^{N-1} f(t_n)  \cdot  e^{-2\pi i s t_n}
+\end{equation}
+
+\underline{\textit{Paso3}}
+\vspace{1.0mm}
+
+\textbf{Necesito justificar transformada de g}
+
+Discretizamos $\widehat{g}$
+
+Tomamos $N$ muestras equiespaciadas de $f$  $[0,2B]$ con \[ N = \frac{2B}{\frac{1}{L}} = 2BL \].
+
+Obteniendo  los puntos
+\[ s_0 = 0, \quad s_1 = \frac{1}{L}, \quad s_2 = \frac{2}{L}, \ldots, s_{N-1} = \frac{N-1}{L} \].
+
+Consideramos la versión discreta de \( \widehat{g} \) como la lista \( [\widehat{g} (s_0), \widehat{g} (s_1), \ldots, \widehat{g} (s_{N-1})] \). 
+
+Obteniendo finalmente:
+
+\begin{equation}
+    \widehat{g}(s_n) = \sum_{k=0}^{N-1} f(t_k) e^{-2\pi i s_n t_k}, \quad n = 0,1,\ldots,N-1
+\end{equation}
+
+
+
+\underline{\textit{Paso4}}
+
+
+\[
+Ff(s) = \int_{0}^{L} e^{-2\pi ist} f(t) \, dt.
+\]
+Así, en los puntos de muestra $s_m$,
+\[
+Ff(s_m) = \int_{0}^{L} e^{-2\pi ism t} f(t) \, dt,
+\]
+y conocer los valores de $Ff(s_m)$ es conocer $Ff(s)$ razonablemente bien. Ahora usa los puntos de muestra $t_k$ para $f(t)$ y escribe una aproximación de suma de Riemann para la integral. El espaciado $\Delta t$ de los puntos es $1/2B$, entonces
+\[
+Ff(s_m) = \int_{0}^{L} f(t)e^{-2\pi ism t} \, dt \approx \frac{1}{2B} \sum_{n=0}^{N-1} f(t_n) e^{-2\pi ism t_n} \Delta t = \frac{1}{2B} \sum_{n=0}^{N-1} f(t_n) e^{-2\pi ism t_n} = \frac{1}{2B} F(s_m).
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\vspace{1.5cm}
+
+\begin{definicion}   
+Sea $f = (f[0],f[1],\ldots,f[N-1])$ una N-tupla. Definimos la Transformada de Fourier Discreta de $f$ como la N-tupla $F = (F[0],F[1],\ldots,F[N-1])$ definida como:
+\begin{equation}
+    F[m] = \sum_{n=0}^{N-1} f[n] e^{-2\pi i \frac{mn}{N}}, \quad m = 0,1,\ldots,N-1
+\end{equation}
+\end{definicion}
+
+
+\noindent De donde se sigue inmediatamente la siguiente definición.
+
+\begin{definicion}   
+Sea $F = (F[0],F[1],\ldots,F[N-1])$ una N-tupla. Definimos la Inversa de la Transformada de Fourier Discreta de $F$ como la N-tupla $f = (f[0],f[1],\ldots,f[N-1])$ definida como:
+\begin{equation}
+    f[n] = \frac{1}{N}\sum_{m=0}^{N-1} F[m] e^{2\pi i \frac{mn}{N}}, \quad n = 0,1,\ldots,N-1
+\end{equation}
+\end{definicion}
+
+\noindent Recibe el nombre de Inversa de la Transformada de Fourier Discreta ya que a partir de una comprobación directa obtenemos la identidad al componer ambas. \textbf{(hacer una dirección )}
+\textbf{escala}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\endinput
+%--------------------------------------------------------------------
+% FIN DEL CAPÍTULO. 
+%--------------------------------------------------------------------

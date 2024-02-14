@@ -1,0 +1,125 @@
+% !TeX root = ../tfg.tex
+% !TeX encoding = utf8
+
+\chapter{Transformada de Fourier en $\mathscr{L}^1(\mathbb{R}^n)$}
+\begin{definicion}\label{def1}
+Sea $f \in \mathscr{L}^1(\mathbb{R}^n)$. La transformada de Fourier de $f$ es  la función $\widehat{f} : \mathbb{R}^n \rightarrow \mathbb{C}$ definida por 
+\begin{equation}
+    \widehat{f}(y) = \int_{\mathbb{R}^n} f(x) e^{-2\pi i \langle x, y \rangle} \, dx \quad \forall y \in \mathbb{R}^n
+\end{equation}
+donde $\langle x, y \rangle$ denota el producto escalar en $\mathbb{R}^n$.
+\end{definicion}
+
+
+\begin{observacion}
+    Lo primero que debemos mencionar es que la definición anterior es legítima puesto que, dado $y \in \mathbb{R}^n$, la función $x \rightarrow f(x)e^{-2\pi i\langle x, y \rangle}$ es medible por ser el producto de una función medible $f$ y la función continua $x \rightarrow e^{-2 \pi i \langle x, y \rangle}$, y además 
+    \begin{equation}
+        \int_{\mathbb{R}^n}|f(x)e^{-2\pi i\langle x, y \rangle}| \, dx  = \int_{\mathbb{R}^n}|f(x)| \, dx < \infty
+    \end{equation}
+\end{observacion}
+\noindent luego es integrable en $\mathbb{R}^n$.
+
+\begin{observacion}
+Como el lector puede imaginar uno de nuestros objetivos es ser capaces de reconstruir la función $f$ a partir de $\widehat{f}$. Esta tarea se pretende llevar a cabo mediante la fórmula 
+\begin{equation}
+    f(x) = \int_{\mathbb{R}^n} \widehat{f}(y) e^{2\pi i \langle x, y \rangle} \, dy \quad 
+\end{equation}
+Esto implica que la función transformada \( \widehat{f} \) debe ser integrable sobre \( \mathbb{R}^n \), lo cual puede no ser siempre el caso, incluso para funciones aparentemente simples. En situaciones donde la función transformada no cumpla con el requisito de ser integrable, se pueden considerar otras interpretaciones alternativas a la fórmula propuesta.
+\end{observacion}
+
+\begin{observacion}
+Es interesante observar que el concepto de la transformada de Fourier tiene sentido para funciones definidas casi por doquier en $\mathbb{R}^n$.
+Además si $f=g$ c.p.d en $\mathbb{R}^n$, entonces se tiene por el teorema de unicidad [ref] $\widehat{f}=\widehat{g}$. Por tanto la transformada de Fourier se transfiere naturalmente al espacio $L^1(\mathbb{R}^n)$.
+\end{observacion}
+
+\begin{observacion}
+Es frecuente encontrar otros textos en los que la transformada se define mediante otras expresiones como puede ser 
+\begin{equation}\label{eq:trans2}
+    \int_{\mathbb{R}^n} f(x) e^{-i \langle x, y \rangle} \, dx 
+\end{equation}
+aparentemente más sencilla. Lo cierto es que esto obliga a que la reconstrucción se haga mediante la fórmula 
+\begin{equation}
+   \frac{1}{(2 \pi)^n} \int_{\mathbb{R}^n} f(x) e^{i \langle x, y \rangle} \, dy \quad 
+\end{equation}
+Por lo que la constante (ligada  a $2 \pi$) aparece en la reconstrucción, esta vez dependiendo del número de dimensiones.
+
+En general si definimos la transformada de Fourier como 
+\begin{equation}
+    a\int_{\mathbb{R}^n} f(x) e^{-i \langle x, y \rangle} \, dx 
+\end{equation}
+Esto obliga a que la reconstrucción venga dada por 
+\begin{equation}
+   b\int_{\mathbb{R}^n} f(x) e^{i \langle x, y \rangle} \, dy \quad 
+\end{equation}
+donde $a \cdot b = \frac{1}{(2\pi)^n}$
+
+\noindent Por tanto, no podemos eludir la presencia de la constante $2 \pi$ en ninguna instancia. Sin embargo, parece que con nuestra elección minimizamos el riesgo de cometer un error ya que al incorporar la constante en la exponencial, obtenemos fórmulas completamente simétricas y válidas para cualquier dimensión. Pero si el lector aún no ha quedado convencido, es crucial señalar que el teorema de convolución, que será el núcleo central de este trabajo, no involucrará la presencia de constantes añadidas (aunque estas constantes sí aparecerán en el contexto de la transformada  de Fourier y la derivación \textbf{d}).
+\end{observacion}
+
+\section{Propiedades de la transformada de Fourier}
+Demostraremos algunas propiedades de la transformada de Fourier para comenzar a familiarizarnos con la definición.
+
+\begin{proposicion}
+    Sean $f,g \in \mathscr{L}^1(\mathbb{R}^n)$ y sea $\alpha,\beta \in \mathbb{C}$. Entonces
+    \begin{equation}
+         \widehat{\alpha f+\beta g} = \alpha \widehat{f} + \beta \widehat{g}
+    \end{equation}
+\end{proposicion}
+
+\begin{proof}
+Para cada $y \in \mathbb{R}^n$ se verifica que
+\begin{equation}
+\begin{aligned}
+\widehat{ \alpha f+ \beta g} &= \int_{ \mathbb{R}^n}(\alpha f(x) + \beta g(x)) e^{-2\pi i \langle x, y \rangle} \, dx 
+&= \alpha \int_{\mathbb{R}^n} f(x)e^{-2 \pi i \langle x, y \rangle} \, dx + \beta \int_{\mathbb{R}^n} g(x)e^{-2 \pi i \langle x, y \rangle} \, dx
+\end{aligned}
+\end{equation}
+\begin{equation}
+= \alpha \widehat{f} + \beta \widehat{g}.
+\end{equation}
+\end{proof}
+
+\begin{proposicion}
+Sean $f,g \in \mathscr{L}^1(\mathbb{R}^n)$. Entonces 
+%\renewcommand{\labelenumi}{\roman{enumi})}
+
+\begin{enumerate}
+    \item $\widehat{\overline{f}}(y) = \overline{\widehat{f}(-y)}$
+    \item $\widehat{f}(-y) = \widehat{f}(-y)$
+    \item $\widehat{f}(-y) = \overline{\widehat{f}(y)}$
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}
+\begin{alignat}{3}
+        \widehat{\overline{f}}(y) &= \int_{\mathbb{R}^n} \overline{f(x)}e^{-2\pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n} \overline{f(x)e^{2\pi i \langle x, y \rangle}} \, dx \\ &=  \overline{\int_{\mathbb{R}^n} f(x)e^{2\pi i \langle x, y \rangle} \, dx } =\overline{\widehat{f}(-y)} \\
+        \widehat{f}(-y) &= \int_{\mathbb{R}^n} f(-x)e^{-2\pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n} \overline{f(x)e^{-2\pi i \langle (-x), y \rangle}} \, dx \\ &=  \overline{\int_{\mathbb{R}^n} f(x)e^{2\pi i \langle x, (-y) \rangle} \, dx } =\overline{\widehat{f}(-y)} \\
+\end{alignat}
+\begin{alignat}{3}
+       \widehat{\overline{f}}(y) &= \int_{\mathbb{R}^n} \overline{f(-x)}e^{-2\pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n} \overline{f(-x)e^{2\pi i \langle x, y \rangle}} \, dx \\ &=  \overline{\int_{\mathbb{R}^n} f(x)e^{-2\pi i \langle x, y \rangle} \, dx } =\overline{\widehat{f}(y)}
+\end{alignat}
+\end{proof}
+
+\begin{proposicion}
+    Sea $f$
+\end{proposicion}
+
+
+
+\begin{proposicion}
+    Sea $f$
+\end{proposicion}
+
+    
+
+    
+
+
+
+
+
+
+
+%--------------------------------------------------------------------
+% FIN DEL CAPÍTULO. 
+%--------------------------------------------------------------------
