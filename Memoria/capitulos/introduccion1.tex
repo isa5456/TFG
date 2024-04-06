@@ -1,11 +1,53 @@
-% !TeX root = ../tfg.tex
-% !TeX encoding = utf8
-%
-%*******************************************************
-% Introducción
-%*******************************************************
-
-% \manualmark
-% \markboth{\textsc{Introducción}}{\textsc{Introducción}} 
+ 
 \chapter{Introducción}
- hablar sobre quien es $L^1(\mathbb{R}^n)$ y definir traslacion y mu  y todo eso  quizas es mejor en otro capitulo ns 
+
+\noindent Recordemos que uno de nuestros propósitos principales es entrenar una Red Neuronal Convolucional (CNN) implementando las convoluciones como operaciones puntuales, con el fin de reducir el tiempo de entrenamiento y, por ende, contribuir directamente a una disminución del consumo energético. Como el lector puede intuir, esto será una aplicación del denominado \textit{Teorema de Convolución} junto con el uso de la \textit{Transformada Rápida de Fourier}, que permitirá el cálculo de la Transformada de Fourier Discreta en un tiempo aceptable. 
+\vspace{0.2cm}
+
+\noindent El propósito de esta primera parte del TFG dedicada a la contribución matemática es desarrollar una base teórica sólida que permitirá establecer la definición de un objeto matemático de tal complejidad y riqueza que facilite no solo la derivación de la Transformada de Fourier Discreta (TFD) a partir de este, sino también la comprensión intuitiva de sus propiedades esenciales, así como el Teorema de Convolución para el ámbito discreto.
+
+\vspace{0.2cm}
+
+
+\noindent La mayoría de los enfoques hacia la TFD surgen de manera natural a partir de las Series de Fourier. Sin embargo, se ha optado por desarrollar como punto de partida un marco teórico alternativo, que describimos a continuación. Esta alternativa elegida se debe a la importancia de explorar diferentes interpretaciones, para así enriquecer nuestra comprensión de esta herramienta y de sus propiedades. Además, este enfoque permitirá estudiar de manera teórica ciertos aspectos específicos, como la derivación de la convolución, que son extensamente usados en el ámbito computacional. 
+
+
+\vspace{0.2cm}
+
+\noindent 
+Cabría pensar, entonces, que se introducirá la Transformada de Fourier en $\mathscr{L}^1(\mathbb{R})$. No obstante, optamos por centrar nuestro principal marco de estudio en $\mathscr{L}^1(\mathbb{R}^n)$, con el propósito de establecer un contexto más amplio  y  de efectuar más adelante una comparación con la DFT 2D (dos dimensiones), la cual es utilizada ampliamente en el campo de visión por computador. 
+\vspace{0.2cm}
+
+\noindent 
+Finalmente, el lector se podría cuestionar la decisión de desarrollar la sección teórica en $\mathscr{L}^1(\mathbb{R}^n)$ en lugar de en el espacio de Schwartz $\mathscr{S}^1(\mathbb{R}^n)$, dado que la Transformada de Fourier muestra un comportamiento particularmente favorable en este último, y además, numerosos resultados se pueden obtener sin necesidad de hipótesis adicionales, más allá de que la función pertenezca a dicho espacio. De hecho, en la mayoría de fuentes bibliográficas consultadas, se introduce la Transformada de Fourier en $\mathscr{S}^1(\mathbb{R}^n)$. Sin embargo, se opta  por desarrollar la teoría dentro del espacio $\mathscr{L}^1(\mathbb{R}^n)$ para ampliar significativamente nuestra capacidad de aplicar estos conceptos teóricos en un contexto más general. Esto ha planteado el reto añadido de identificar las condiciones bajo las cuales ciertas propiedades y resultados se mantienen válidos en $\mathscr{L}^1(\mathbb{R}^n)$. Este reto se ha manifestado de forma significativa en las áreas de derivación y aplicación de la Transformada de Fourier, obligando a un examen meticuloso de cómo estas operaciones interactúan dentro de este espacio más general.
+
+
+
+\vspace{0.2cm}
+
+\noindent Describimos a continuación la estructura del resto de esta primera parte de la memoria, donde encontramos otros cuatro capítulos aparte de este, que permiten estructurar el contenido  de manera coherente y detallada, abarcando desde los fundamentos teóricos hasta las aplicaciones prácticas específicas en el ámbito computacional. Cada capítulo se construye sobre el conocimiento previo, dando lugar a una comprensión profunda y gradual de la temática en estudio.
+\vspace{0.2cm}
+
+\begin{itemize}
+    
+    \item En el segundo capítulo, \textit{\textbf{Preliminares}}, se revisan los conceptos matemáticos y definiciones más relevantes, que serán usados con frecuencia más adelante en el texto. Cabe destacar el \textit{módulo de continuidad de una función} que aparecerá de manera recurrente a lo largo del presente trabajo.
+
+
+    \item El tercer capítulo, titulado \textit{\textbf{Transformada de Fourier en $\mathscr{L}^1(\mathbb{R}^n)$}}, introduce la 
+     Transformada de Fourier en $\mathscr{L}^1(\mathbb{R}^n)$, así como sus propiedades más importantes.  Dentro de este análisis, se profundiza en aspectos cruciales como la \textit{continuidad}, la \textit{acotación}, y el \textit{Lema de Riemann-Lebesgue}. Además, se realiza un examen detallado de la relación entre la Transformada de Fourier y los \textit{procesos de derivación}. Después, se presentan y demuestran dos teoremas: el \textit{Teorema de Inversión}, que permitirá bajo ciertas condiciones recuperar la función a partir de su Transformada de Fourier, y el \textit{Teorema de Unicidad}, que surgirá como consecuencia.
+     Por último, se introduce la \textit{Clase de Schwartz} y se describe el comportamiento particularmente favorable de la Transformada de Fourier en este espacio.
+
+      
+    \item Proseguimos con el cuarto capítulo titulado, \textbf{\textit{Convolución}} y dedicado al estudio de esta operación esencial, junto con sus principales propiedades. Mediante el \textit{Teorema de Young}, llevamos a cabo un análisis exhaustivo sobre las condiciones bajo las cuales está definida esta operación. Adicionalmente, introducimos el \textit{Teorema de Convolución}, que constituye el núcleo de este trabajo. Posteriormente, estudiamos la \textit{derivabilidad} de la convolución y cómo este resultado interactúa y repercute en el contexto computacional.
+    Finalmente introducimos los \textit{métodos de sumación} a partir de un estudio de los \textit{núcleos de sumabilidad}, que permitirán construir otros mecanismos inversos de la transformada de Fourier.
+
+    \item Finalizamos esta primera parte matemática de la memoria con el capítulo \textit{\textbf{Transformada de Fourier en $\mathscr{L}^2(\mathbb{R}^n)$}}. Este nuevo marco teórico nos permitirá estudiar el concepto de la Transformada de Fourier $\widehat{f}$ para cualquier función $f \in  \mathscr{L}^2(\mathbb{R}^n)$, así como sus propiedades y relación con la definición previamente establecida en $\mathscr{L}^1(\mathbb{R}^n)$. Presentamos en este capítulo el \textit{Teorema de Plancharel} y las \textit{fórmulas de Parseval}.
+    Además, exploraremos otras propiedades relevantes que posteriormente identificaremos en el contexto computacional.
+\end{itemize}
+
+
+
+\vspace{0.2cm}
+
+\noindent En la elaboración de esta primera parte de la memoria, se ha recurrido principalmente a una serie de fuentes bibliográficas destacadas para cimentar las bases teóricas y prácticas presentadas. Entre éstas, sobresale el uso de los apuntes de la asignatura Análisis de Fourier en la Universidad de Granada, impartida por Armando Reyes Villena Muñoz. A pesar de tratar sobre la Transformada de Fourier en $\mathscr{L}^1(\mathbb{R})$, su claridad es tal que han facilitado la generalización de muchos conceptos presentados a $\mathscr{L}^1(\mathbb{R}^n)$.  Otros textos que han sido consultados con frecuencia incluyen el libro \cite{LibroSchwartz}, que ha sido una fuente primordial para la demostración del Lema de Riemann-Lebesgue, además de proporcionar información detallada sobre $\mathscr{S}(\mathbb{R}^n)$.
+Adicionalmente, el texto  \cite{FourierTransformsClassic} ha contribuido a una ampliación de conocimientos acerca de cómo la teoría se extiende de $\mathscr{L}^{1}(\mathbb{R})$ a $\mathscr{L}^{1}(\mathbb{R}^n)$. Como complemento, se han consultado otras referencias valiosas, tales como \cite{FirstCourseFourier} y \cite{FourierAnalysisApplications}, para profundizar en diferentes aspectos y aplicaciones del Análisis de Fourier.

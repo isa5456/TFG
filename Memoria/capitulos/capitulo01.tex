@@ -1,125 +1,162 @@
 % !TeX root = ../tfg.tex
 % !TeX encoding = utf8
 
+\chapter{Preliminares}
+Let x represent a discrete variable. As you learned in Chapter 3, the unit discrete
+impulse, d(x), serves the same purposes in the context of discrete systems as the
+impulse d(t) does when working with continuous variables. It is defined as
+
+
+Teorema de nyquist.
+
+bandlimited
+
+uunit impulse 
+226 sampling
+contnuo
+intervalo sampling theorem
 \chapter{Transformada de Fourier Discreta}
 
-\section{Motivación}
 
-En este capítulo, deduciremos la Transformada Discreta de Fourier (DFT), una herramienta crucial en el procesamiento digital de señales.
-Existen diversas aproximaciones que derivan en la expresión de la DFT. 
+\section{Introducción}
 
-Esta definición podría darse directamente y luego tratar de enlazarla con el concepto que teníamos para funciones integrables en $\mathbb{R}$, sin embargo, se opta por tratar de desarrollar la intuición de la definicón de esta partiendo  del ámbito continuoya que proporcionar una conexión conceptual con el dominio continuo contribuye a una comprensión más profunda y coherente de la transformada discreta de Fourier.
+En este capítulo, analizaremos  en detalle la Transformada Discreta de Fourier (DFT), una herramienta crucial en el procesamiento digital de señales. Estudiaremos algunas de sus propiedades más importantes, que no deberán de sorprender al lector, ya que resultarán familiares y vendrán motivadas por su similitud con las propiedades descritas en el ámbito continuo. Haremos especial hincapié en el teorema de convolución cuya importancia quedará demostrada en el último capítulo del presente trabajo.
 
-En cierta manera el lector puede pensar que trataremos de "transformar lo continuo en discreto".
+Se podría presentar directamente la definición de la DFT sin necesidad de justificar su origen. Sin embargo se opta por tratar de desarrollar la intuición de la definición de esta, ya que proporcionar una conexión conceptual con el dominio continuo contribuye a una comprensión más profunda y coherente de la Transformada Discreta de Fourier y de sus propiedades.
+
+Es interesante mencionar que la mayoría de aproximaciones de la DFT tienen su origen en las Series de Fourier, y puede el lector preguntarse porque hemos establecido un marco teórico distinto del que partir. La razón es que conocer otras posibles interpretaciones, y tratar de relacionar la DFT con la Transformada de Fourier continua puede aportar una comprensión más profunda y completa de esta herramienta. 
+Por ejemplo en visión por computador aparece, entre otros, el concepto de  ``derivación de la convolución'', que es el ``análogo'' al estudiado en la primera parte del trabajo, y por tanto proporcionan una intuición directa del mismo.
+
+\vspace{0.2mm}
+
+\noindent Puede por tanto el lector pensar que estamos tratando de transformar lo ``continuo'' en ``discreto'' en la medida de lo posible.
+
+\section{Transformada de Fourier discreta}
+
+Sin perder de vista nuestro objetivo, queremos calcular la Transformada de Fourier de una determinada imagen, de tal manera que deberíamos estar interesados en desarrollar una expresión 2-D que conserve las propiedades naturales que cabría esperar. Sin embargo de ahora en adelante prestaremos especial atención a la transformada 1D, cuyas propiedades y eficiencia computacional estudiaremos al detalle.
 
 
-\section{1-DFT}
+Esto se debe a que, como hemos mencionado previamente, la Transformada de Fourier discreta 2D, puede expresarse en función de la  DFT 1D. Tanto es así que de hecho, las librerías que calculan la DFT (usando el algoritmo FFT, descrito en el siguiente capítulo) de una determinada señal 2D, en realidad aplican sucesivas transformadas 1D y por tanto usan el algoritmo FFT 1-D. Por esta razón, a partir de este punto, nos concentraremos en el estudio de la DFT 1D, sin perder de vista ciertos aspectos relevantes de la DFT 2D.
 
-Sea $f : \mathbb{R} \rightarrow  \mathbb{R}$  una función integrable en $\mathbb{R}$ que representará una señal. Haremos dos suposiciones acerca de esta.
+\subsection{Transformada de Fourier discreta 1D}
+
+Sea $f : \mathbb{R} \rightarrow  \mathbb{R}$  una función integrable en $\mathbb{R}$ que representará una señal 1D.
+
+\noindent Haremos por tanto dos suposiciones acerca de $f$.
 \begin{itemize}
-    \item Suponemos que \( f \) es de soporte compacto en \([0, L]\), donde \( L \in \mathbb{N} \).
-    \item Suponemos que \( f^* \) es de soporte compacto en  \([0, 2B]\), donde \( B \in \mathbb{N} \).
+    \item Suponemos que \( f \) es de soporte compacto en \([0, L]\), donde \( L \in \mathbb{N} \). Es decir $f(t)=0 \, \, \forall t \in \mathbb{R} \setminus [0, L]$.
+    \item Suponemos que \( \widehat{f} \) es de soporte compacto en  \([0, 2B]\), donde \( B \in \mathbb{N} \). Esto es $\widehat{f}(y)=0 \, \, \forall y \in \mathbb{R} \setminus [0, 2B]$.
 \end{itemize}
 
+\noindent Estamos considerando  por tanto que $f$ es tanto limitada en el tiempo como limitada en banda, sabiendo que esto no tiene no es en general cierto. Sin embargo, finalmente vamos a llegar a una definición de una transformada discreta de Fourier que tendrá sentido por sí misma, independientemente de estas precarias suposiciones iniciales, que por otra parte tienen sentido al conocer las limitaciones computacionales que nos llevan a trabajar con operaciones finitas.  
 
-\noindent Estamos considerando  por tanto $f$ tanto limitada en el tiempo como limitada en banda, \textbf{sabiendo que esto solo puede ser aproximadamente cierto}. Sin embargo, finalmente vamos a llegar a una definición de una transformada discreta de Fourier que tendrá sentido por sí misma, independientemente de estas precarias suposiciones iniciales.
+\begin{itemize}
+    \item \textbf{Paso 1} \\
+    Tomamos $N$ muestras equiespaciadas de $f$  en $[0,L]$ con \[ N = \frac{L}{\frac{1}{2B}} = 2BL. \]
 
-\vspace{0.9mm}
-\underline{\textit{Paso1}}
-
-Tomamos $N$ muestras equiespaciadas de $f$  en $[0,L]$ con \[ N = \frac{L}{\frac{1}{2B}} = 2BL \].
-
-Obteniendo  los puntos
-\[ t_0 = 0, \quad t_1 = \frac{1}{2B}, \quad t_2 = \frac{2}{2B}, \ldots, t_{N-1} = \frac{N-1}{2B} \].
-
-Consideramos la versión discreta de \( f \) como la lista \( [f(t_0), f(t_1), \ldots, f(t_{N-1})] \). 
-
-
-
-
-
-
-En el contexto del \textbf{Teorema de Muestreo} es una buena elección como tasa de muestreo:
-
-\vspace{1.5cm}
-
-
-\noindent \underline{\textit{Paso2}}
-
-\noindent Sea \( g: \mathbb{R} \rightarrow \mathbb{R} \) definida como 
+De manera que la tasa de muestreo será de $2B$ ejemplos por segundo. Obteniendo  los puntos $t_k$:
 \begin{equation}
-    g(t) = \sum_{n=0}^{N-1} \delta(t - t_n) \cdot f(t_n)
+   t_0 = 0, \quad t_1 = \frac{1}{2B}, \quad t_2 = \frac{2}{2B}, \ldots, t_{N-1} = \frac{N-1}{2B}. 
+\end{equation}
+
+Consideramos la versión discreta de \( f \) como la lista \( f_d = [f(t_0), f(t_1), \ldots, f(t_{N-1})] \). 
+\begin{observacion}
+ Lejos de ser arbitraria, esta tasa de muestreo que hemos tomado viene inspirada en el Teorema de muestreo de Nyquist-Shannon que asegura que la construcción exacta de una señal continua en banda base a partir de sus muestras, es matemáticamente posible, si la señal está limitada en banda y la tasa de muestreo es superior al doble de su ancho de banda. En este caso la estamos considerando exactamente el doble de la frecuencia. Muestrear exactamente a la tasa de Nyquist a veces es suficiente para una recuperación perfecta de la función, pero hay casos en los que esto conduce a ciertas dificultades [ref].
+\end{observacion}
+
+
+\item \textbf{Paso 2} \\ 
+Podemos expresar $f_d : \mathbb{R} \rightarrow \mathbb{R}$ de la siguiente forma
+\begin{equation}
+    f_d(t) = \sum_{k=0}^{N-1} \delta(t - t_k)  f(t_k) \, \,, t \in \mathbb{R}.
 \end{equation} 
- es la versión discreta de $f$ definida en $\mathbb{R}$ 
+Observamos que $f_d$ corresponde con la función $f$ discretizada.  Para su construcción se ha usado la función impulso discreta $\delta$ [ref].
 
-Construimos ahora $\widehat{g}$ como: 
-
-\begin{equation}
-    \widehat{g}(s) = \sum_{n=0}^{N-1} f(t_n)  \cdot \widehat{\delta}(t - t_n) = \sum_{n=0}^{N-1} f(t_n)  \cdot  e^{-2\pi i s t_n}
+Se tiene evidentemente que $f_d$ es integrable en $\mathbb{R}$. Construimos por tanto $\widehat{f_d}$ usando la definición \ref{def:definicion} para $n=1$, y obtenemos  $\widehat{f_d}: \mathbb{R}  \rightarrow \mathbb{C}$
+\begin{equation}\label{eqd}
+    \widehat{f_d}(s) = \sum_{k=0}^{N-1} f(t_k)   \widehat{\delta}(t - t_k) = \sum_{n=0}^{N-1} \int_{\mathbb{R}}f(t_k)   \delta(t - t_k)e^{-2 \pi i t s} \, dt = \sum_{n=0}^{N-1} f(t_k)  e^{-2\pi i s t_k}.
 \end{equation}
 
-\underline{\textit{Paso3}}
-\vspace{1.0mm}
-
-\textbf{Necesito justificar transformada de g}
-
-Discretizamos $\widehat{g}$
-
-Tomamos $N$ muestras equiespaciadas de $f$  $[0,2B]$ con \[ N = \frac{2B}{\frac{1}{L}} = 2BL \].
-
-Obteniendo  los puntos
-\[ s_0 = 0, \quad s_1 = \frac{1}{L}, \quad s_2 = \frac{2}{L}, \ldots, s_{N-1} = \frac{N-1}{L} \].
-
-Consideramos la versión discreta de \( \widehat{g} \) como la lista \( [\widehat{g} (s_0), \widehat{g} (s_1), \ldots, \widehat{g} (s_{N-1})] \). 
-
-Obteniendo finalmente:
-
+\item  \textbf{Paso 3}\\
+Hemos calculado la Transformada de Fourier continua de la función discreta $f_d$, obteniendo una función $\widehat{f_d} \,$ definida en $\mathbb{R}$ que requiere ser discretizada. Recordamos que por hipótesis sabemos que $\widehat{f_d}(t) = 0 \, \, \forall t \notin [0,2B]$. Siguiendo con la filosofía usada anteriormente, usamos una tasa de muestreo de $\frac{1}{L}$, tomamos entonces $N$ muestras equiespaciadas de $\widehat{f_d}$   con 
 \begin{equation}
-    \widehat{g}(s_n) = \sum_{k=0}^{N-1} f(t_k) e^{-2\pi i s_n t_k}, \quad n = 0,1,\ldots,N-1
+    N = \frac{2B}{\frac{1}{L}} = 2BL.
+\end{equation}
+Obteniendo  los puntos $s_m$
+\begin{equation}
+    s_0 = 0, \quad s_1 = \frac{1}{L}, \quad s_2 = \frac{2}{L}, \ldots, s_{N-1} = \frac{N-1}{L}. 
+\end{equation}
+Consideramos por tanto la versión discreta de $\widehat{g}$ como la lista \( \, \widehat{g}_d =[\widehat{g} (s_0), \widehat{g} (s_1), \ldots, \widehat{g} (s_{N-1})] \). Aplicando~\eqref{eqd} se tiene finalmente que 
+\begin{equation}\label{eq:tras}
+    \widehat{f_d}(s_m) = \sum_{k=0}^{N-1} f(t_k) e^{-2\pi i s_m t_k}, \quad m = 0,1,\ldots,N-1
+\end{equation} 
+que nos da una expresión para pasar de la versión discreta de $f_d$ a la versión discreta de su transformada $\widehat{f_d}$.
+\end{itemize}
+\noindent Cabe preguntarse en qué sentido esta expresión es una aproximación discreta de la transformada de Fourier de $f$. Esta cuestión se puede abordar de la siguiente manera.
+
+\noindent Calculamos la Transformada de Fourier de $f$;
+\begin{equation}
+  \widehat{f}(s)= \int_{0}^{L} e^{-2\pi ist} f(t) \, dt.  
+\end{equation}
+Evaluándola en los puntos de muestra $s_m$, se tiene
+\begin{equation}
+   \widehat{f}(s_m) = \int_{0}^{L} e^{-2\pi is_m t} f(t) \, dt \quad  \forall m \in \{0, \ldots,N-1\}
+\end{equation}
+Empleando ahora la aproximación de suma de Riemann para la integral con los puntos $t_n$, los cuales estaban a distancia  $\Delta t = \frac{1}{2B}$,  se tiene que dado $m \in \{0, \ldots,N-1\}$
+\begin{equation} \label{eq:di}
+\begin{aligned}
+\widehat{f}(s_m) &= \int_{0}^{L} f(t)e^{-2\pi ism t} \, dt \\
+&\approx  \sum_{n=0}^{N-1} f(t_n) e^{-2\pi is_m t_n} \Delta t = \frac{1}{2B} \sum_{n=0}^{N-1} f(t_n) e^{-2\pi is_m t_n} = \frac{1}{2B} \widehat{f_d}(s_m).
+\end{aligned}
 \end{equation}
 
 
+\noindent Si atendemos a~\eqref{eq:di}, los valores $\widehat{f_d}(s_m)$ proporcionan una aproximación de los valores $\widehat{f}(s_m)$ salvo una cierta constante  $\frac{1}{2B}$.
 
-\underline{\textit{Paso4}}
+\noindent Si usamos la definición de los puntos $t_k = \frac{k}{2B}$ y $s_m = \frac{m}{L}$ y reescribimos~\eqref{eq:tras} se tiene que 
+\begin{equation}\label{eq:deft}
+     \widehat{f_d}(s_m) = \sum_{k=0}^{N-1} f(t_k) e^{-2\pi i s_n t_k} = \sum_{k=0}^{N-1} f(t_k) e^{-2\pi i \frac{nm}{2BL}} = \sum_{k=0}^{N-1} f(t_k) e^{-2\pi i \frac{nm}{N}}.
+\end{equation}
+Lo verdaderamente notable de la ecuación \eqref{eq:deft} radica en que el factor $e^{-2\pi i \frac{nm}{N}}$ depende únicamente de las constantes $n$, $m$ y $N$, las cuales representan respectivamente el número de muestras de entrada, de salida y el número total de puntos. Este factor oculta los valores de las muestras en sí mismos. En cuanto al otro factor $f(t_k)$, iteramos sobre el índice k, y es en realidad a partir de este índice como recuperamos el valor correspondiente. Estas observaciones nos llevan a una definición más general que tiene un significado intrínseco. En lugar de concebir la DFT en términos de los valores muestreados de una señal continua y el muestreo de su transformada, la entenderemos como una operación que toma una lista con N elementos y produce otra lista con N elementos. 
 
+\noindent Presentamos finalmente la definición de la Transformada de Fourier Discreta en 1D.
 
-\[
-Ff(s) = \int_{0}^{L} e^{-2\pi ist} f(t) \, dt.
-\]
-Así, en los puntos de muestra $s_m$,
-\[
-Ff(s_m) = \int_{0}^{L} e^{-2\pi ism t} f(t) \, dt,
-\]
-y conocer los valores de $Ff(s_m)$ es conocer $Ff(s)$ razonablemente bien. Ahora usa los puntos de muestra $t_k$ para $f(t)$ y escribe una aproximación de suma de Riemann para la integral. El espaciado $\Delta t$ de los puntos es $1/2B$, entonces
-\[
-Ff(s_m) = \int_{0}^{L} f(t)e^{-2\pi ism t} \, dt \approx \frac{1}{2B} \sum_{n=0}^{N-1} f(t_n) e^{-2\pi ism t_n} \Delta t = \frac{1}{2B} \sum_{n=0}^{N-1} f(t_n) e^{-2\pi ism t_n} = \frac{1}{2B} F(s_m).
-\]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\vspace{1.5cm}
-
-\begin{definicion}   
-Sea $f = (f[0],f[1],\ldots,f[N-1])$ una N-tupla. Definimos la Transformada de Fourier Discreta de $f$ como la N-tupla $F = (F[0],F[1],\ldots,F[N-1])$ definida como:
+\begin{definicion}  \label{def:tfd} 
+Sea $f = (f[0],f[1],\ldots,f[N-1])$ una N-tupla. Definimos la Transformada de Fourier Discreta de $f$ como la N-tupla $\widehat{f} = (F[0],F[1],\ldots,F[N-1])$ definida como:
 \begin{equation}
-    F[m] = \sum_{n=0}^{N-1} f[n] e^{-2\pi i \frac{mn}{N}}, \quad m = 0,1,\ldots,N-1
+    \widehat{f}[m] = \sum_{k=0}^{N-1} f[k] e^{-2\pi i \frac{mk}{N}}, \quad m = 0,1,\ldots,N-1
 \end{equation}
 \end{definicion}
+
+
+\noindent La DFT define una biyección en el espacio $\mathbb{C}^N$. En efecto la transformación $\,\widehat{} \,: \mathbb{C}^N \rightarrow \mathbb{C}^N$ que a un vector $y = (y_0, \ldots, y_n) \in \mathbb{C}^N$, le hace corresponder otro vector $Y = (Y_0, \ldots, Y_n) \in \mathbb{C}^N$ dado por:
+\begin{equation}
+    Y_n = \sum_{k=0}^{N-1} y_k e^{-2\pi i \frac{mn}{N}}, \quad m = 0,1,\ldots,N-1
+\end{equation}
+tiene como inversa 
+\begin{equation}
+    y_n = \frac{1}{N}\sum_{k=0}^{N-1} Y_k e^{2\pi i \frac{mn}{N}}, \quad m = 0,1,\ldots,N-1
+\end{equation}
+
+\begin{observacion}
+    En lo sucesivo adoptaremos el siguiente convenio:
+    Al operar con la DFT de una secuencia de $N$ elementos  $\{y_0, y_1, y_2, \ldots, y_{N-1}\} $, consideramos que dicho vector es una muestra de una sucesión infinita periódica con período \( N \). Por lo que para cualquier entero \( k \) arbitrario, \( y_k \) se define como \( y_q \), donde \( 0 \leq q \leq N - 1 \) es el residuo de la división de \( k \) por \( N \). De la misma manera el vector $Y$ es periódico,  \( Y_{k+N} = Y_k \). Por tanto la TFD transforma señales periódicas discretas en el dominio del tiempo en señales periódicas discretas en el dominio de la frecuencia.
+\end{observacion}
+
+
+\section{Propiedades}
+
+\subsection{Linealidad}
+trivial.
+\subsection{Simetrías}
+
+\subsection{Periodicidad}
+hablar de la periodicidad
+y tb 
+\subsection{Inversión}
+en realidad hecho
+\subsection{Expresión Matricial} no necesario
+
 
 
 \noindent De donde se sigue inmediatamente la siguiente definición.
@@ -131,8 +168,111 @@ Sea $F = (F[0],F[1],\ldots,F[N-1])$ una N-tupla. Definimos la Inversa de la Tran
 \end{equation}
 \end{definicion}
 
-\noindent Recibe el nombre de Inversa de la Transformada de Fourier Discreta ya que a partir de una comprobación directa obtenemos la identidad al componer ambas. \textbf{(hacer una dirección )}
-\textbf{escala}
+\noindent Recibe el nombre de Inversa de la Transformada de Fourier Discreta ya que a partir de una comprobación directa obtenemos la identidad al componer ambas.
+
+
+
+
+\subsection{Transformada de Fourier discreta 2D}
+El razonamiento anterior puede repetirse para deducir la expresión de la Transformada Discreta 2D. Sin embargo si atendemos a la expresión de la Transformada de Fourier en $R^2$, descrita en la primera parte.
+
+\noindent Sea $f: \mathbb{R}^2 \rightarrow \mathbb{C}$, tal que $f$ sea integrable en $\mathbb{R}^2$, se tiene que dado $(y_1,y_2) \in \mathbb{R}^2$: 
+\begin{equation}
+    \widehat{f}(y_1,y_2) = \int_{\mathbb{R}^2} f(x_1,x_2) e^{-2\pi i (x_1y_1+x_2y_2)} \, dx_1dx_2   =  \int_{\mathbb{R}}e^{-2\pi i (x_2y_2)}\int_{\mathbb{R}} f(x_1,x_2) e^{-2\pi i (x_1y_1)} \, dx_1dx_2 
+\end{equation}
+
+\noindent Si hacemos un esfuerzo y pensamos  esta expresión de manera discreta, tenemos que para un valor concreto de $x_2$, movemos $x_1$ a lo largo de todo el dominio considerado,  calculando  $ f(x_1,x_2)e^{-2\pi i (x_2y_2)}$ y acumulando los resultados obtenidos . Este proceso se repite con todos los valores de $x_2$ en el dominio correspondiente.
+
+\noindent En efecto, esto nos lleva a la definición de la Transformada de Fourier discreta 2D:
+
+\begin{definicion}   
+Sea $F = (f[n,m])$ una matriz de tamaño $N \times M$. Definimos la Transformada de Fourier Discreta bidimensional de $f$ como la matriz $\widehat{F} = (F[k,l])$ definida por:
+
+\begin{equation}
+     \widehat{F}[k,l] = \sum_{n=0}^{N-1} \sum_{m=0}^{M-1} f[n,m] e^{-2\pi i \left(\frac{kn}{N} + \frac{lm}{M}\right)}, \quad k = 0,1,\ldots,N-1 \quad \text{y} \quad l = 0,1,\ldots,M-1
+\end{equation}
+\end{definicion}
+
+
+\noindent Dado $k \in \{0,1,\ldots,N-1\}$ y $l \in \{0,1,\ldots,M-1\}$. Veamos que podemos escribir la DFT como
+ \begin{equation} \label{eq:c}
+     \widehat{F}[k,l] = \sum_{n=0}^{N-1} e^{-2\pi i \left(\frac{kn}{N}\right) }\sum_{m=0}^{M-1} f[n,m] e^{-2\pi i \left(\frac{lm}{M}\right) } = \sum_{n=0}^{N-1} e^{-2\pi i \left(\frac{kn}{N}\right) } G[n,l]. 
+\end{equation}
+donde dado $n \in \{0,1,\ldots,N-1\}$
+\begin{equation} \label{eq:c2}
+    G[n,l]=\sum_{m=0}^{M-1} f[n,m] e^{-2\pi i \left(\frac{lm}{M}\right) }
+\end{equation}
+
+
+ 
+\noindent Para un valor de \(n\) observamos que \(G(n,l)\) es la DFT 1-D de la n-ésima fila de \(f(x, y)\). Al variar \(n\) desde 0 hasta \(M - 1\) en la ecuación~\eqref{eq:c2}, calculamos un conjunto de DFT 1-D para todas las filas de \(f(x, y)\). Posteriormente se le realizan transformaciones 1-D a las columnas de este conjunto resultante \(G(n,l)\). Así, concluimos que la DFT 2-D de \(f(x, y)\) puede obtenerse mediante el cálculo de la transformada 1-D de cada fila de \(f(x, y)\) y luego calcular la Transformada 1-D a lo largo de cada columna del resultado. Esta es una simplificación importante porque solo tenemos que lidiar con una variable a la vez.
+Esta propiedad es conocida como \textit{separabilidad}.
+
+
+
+
+
+\section{Convolución}
+
+Distinguimos convolución circular
+
+
+
+
+
+
+\subsection{Convolución 1D}
+
+\subsection{Convolución 2D}
+\begin{definicion}
+Sean $f[n], g[n]$ dos secuencias de  $N$. Definimos la convolución circular de $f[n]$ con $g[n]$ como la secuencia $h[n]$ definida por:
+\begin{equation}
+     h[n] = \sum_{k=0}^{N-1} f[k] \cdot g[(n-k)], \quad n = 0,1,\ldots,N-1.
+\end{equation}
+\end{definicion}
+
+
+
+
+\subsection{Teorema de Convolución}
+\noindent
+
+\noindent Abordamos finalmente el teorema de convolución, el cual nos proporciona una herramienta fundamental para implementar convoluciones como productos puntuales. Esto sugiere una alternativa al cómputo directo de la convolución, abriendo nuevas posibilidades en diversos ámbitos, incluyendo en el de visión por computador.
+
+\noindent Este resultado, al igual que los anteriores, es idéntico al presentado en la primera parte, a pesar de que hayamos cambiado el marco conceptual en el que nos movemos.
+
+
+\begin{teorema}{(de Convolución 1D.)}
+Sea \( x(n) \) una secuencia de \( N \) elementos y sea \( h(n) \) una secuencia de \( M \) elementos. Entonces se tiene que  
+ \[
+\widehat{(X*H)}(k) = \widehat{X}(k) \cdot \widehat{H}(k)
+\]
+
+\end{teorema}
+
+\begin{proof}
+\end{proof}
+
+\begin{teorema}{(de Convolución 2D.)}
+Sea \( x(n) \) una secuencia de \( N \) elementos y sea \( h(n) \) una secuencia de \( M \) elementos. Entonces se tiene que  
+ \[
+\widehat{(X*H)}(k) = \widehat{X}(k) \cdot \widehat{H}(k)
+\]
+
+\end{teorema}
+
+\begin{proof}
+\end{proof}
+
+
+
+ejemplo quizas con una imagen :-)
+
+\subsection{Correlación}
+
+
+
+
 
 
 
@@ -163,3 +303,4 @@ Sea $F = (F[0],F[1],\ldots,F[N-1])$ una N-tupla. Definimos la Inversa de la Tran
 %--------------------------------------------------------------------
 % FIN DEL CAPÍTULO. 
 %--------------------------------------------------------------------
+

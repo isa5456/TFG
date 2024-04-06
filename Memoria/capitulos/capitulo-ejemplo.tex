@@ -2,121 +2,973 @@
 % !TeX encoding = utf8
 
 \chapter{Transformada de Fourier en $\mathscr{L}^1(\mathbb{R}^n)$}
-\begin{definicion}\label{def1}
-Sea $f \in \mathscr{L}^1(\mathbb{R}^n)$. La transformada de Fourier de $f$ es  la función $\widehat{f} : \mathbb{R}^n \rightarrow \mathbb{C}$ definida por 
+\section{Definición}
+
+Como se examinará en esta sección, existen múltiples enfoques para establecer la definición de la Transformada de Fourier en $\mathbb{R}^n$. La formulación que adoptaremos se basa en las presentadas en las referencias~\cite{FourierAnalysisApplications} y~\cite{FirstCourseFourier}. No obstante, se considerarán y discutirán otras definiciones alternativas, como las propuestas en~\cite{FourierTransformsClassic} y~\cite{Riviere2023Fourier}.
+
+\begin{definicion}\label{def:definicion}
+Sea $f \in \mathscr{L}^1(\mathbb{R}^n)$. La Transformada de Fourier de $f$ es  la función $\widehat{f} : \mathbb{R}^n \rightarrow \mathbb{C}$ definida por 
 \begin{equation}
-    \widehat{f}(y) = \int_{\mathbb{R}^n} f(x) e^{-2\pi i \langle x, y \rangle} \, dx \quad \forall y \in \mathbb{R}^n
+    \widehat{f}(y) = \int_{\mathbb{R}^n} f(x) e^{-2\pi i \langle x, y \rangle} \, dx \quad \forall y \in \mathbb{R}^n.
 \end{equation}
-donde $\langle x, y \rangle$ denota el producto escalar en $\mathbb{R}^n$.
 \end{definicion}
 
 
 \begin{observacion}
-    Lo primero que debemos mencionar es que la definición anterior es legítima puesto que, dado $y \in \mathbb{R}^n$, la función $x \rightarrow f(x)e^{-2\pi i\langle x, y \rangle}$ es medible por ser el producto de una función medible $f$ y la función continua $x \rightarrow e^{-2 \pi i \langle x, y \rangle}$, y además 
+    Lo primero que debemos mencionar es que la definición anterior es legítima: dado $y \in \mathbb{R}^n$, la función $x \rightarrow f(x)e^{-2\pi i\langle x, y \rangle}$ es medible por ser el producto de una función medible $f$ y la función continua $x \rightarrow e^{-2 \pi i \langle x, y \rangle}$, y además 
     \begin{equation}
-        \int_{\mathbb{R}^n}|f(x)e^{-2\pi i\langle x, y \rangle}| \, dx  = \int_{\mathbb{R}^n}|f(x)| \, dx < \infty
+        \int_{\mathbb{R}^n}|f(x)e^{-2\pi i\langle x, y \rangle}| \, dx  = \int_{\mathbb{R}^n}|f(x)| \, dx < \infty,
     \end{equation}
 \end{observacion}
-\noindent luego es integrable en $\mathbb{R}^n$.
+\noindent luego es integrable en $\mathbb{R}^n$ para cada $y\in\mathbb{R}^n$.
 
-\begin{observacion}
-Como el lector puede imaginar uno de nuestros objetivos es ser capaces de reconstruir la función $f$ a partir de $\widehat{f}$. Esta tarea se pretende llevar a cabo mediante la fórmula 
+\begin{observacion} \label{obs2}
+Como el lector puede imaginar, uno de nuestros objetivos es ser capaces de reconstruir la función $f$ a partir de $\widehat{f}$. Esta tarea se pretende llevar a cabo mediante la fórmula 
 \begin{equation}
-    f(x) = \int_{\mathbb{R}^n} \widehat{f}(y) e^{2\pi i \langle x, y \rangle} \, dy \quad 
+    f(x) = \int_{\mathbb{R}^n} \widehat{f}(y) e^{2\pi i \langle x, y \rangle} \, dy .
 \end{equation}
-Esto implica que la función transformada \( \widehat{f} \) debe ser integrable sobre \( \mathbb{R}^n \), lo cual puede no ser siempre el caso, incluso para funciones aparentemente simples. En situaciones donde la función transformada no cumpla con el requisito de ser integrable, se pueden considerar otras interpretaciones alternativas a la fórmula propuesta.
+Esto implica que la función Transformada \( \widehat{f} \) debe ser integrable sobre \( \mathbb{R}^n \), lo cual puede no ser siempre el caso, incluso para funciones aparentemente simples. En situaciones donde la función Transformada no cumpla con el requisito de ser integrable, se consideran otras interpretaciones alternativas a la fórmula propuesta.
 \end{observacion}
 
 \begin{observacion}
-Es interesante observar que el concepto de la transformada de Fourier tiene sentido para funciones definidas casi por doquier en $\mathbb{R}^n$.
-Además si $f=g$ c.p.d en $\mathbb{R}^n$, entonces se tiene por el teorema de unicidad [ref] $\widehat{f}=\widehat{g}$. Por tanto la transformada de Fourier se transfiere naturalmente al espacio $L^1(\mathbb{R}^n)$.
+Es interesante observar que el concepto de la Transformada de Fourier tiene sentido para funciones definidas casi por doquier en $\mathbb{R}^n$.
+Además, si $f=g$ c.p.d. en $\mathbb{R}^n$, entonces se tiene que $\widehat{f}=\widehat{g}$. Por tanto, la Transformada de Fourier se transfiere naturalmente al espacio $L^1(\mathbb{R}^n)$.
+
 \end{observacion}
 
 \begin{observacion}
-Es frecuente encontrar otros textos en los que la transformada se define mediante otras expresiones como puede ser 
+Es frecuente encontrar otros textos en los que la transformada se define mediante expresiones diferentes, como puede ser:
 \begin{equation}\label{eq:trans2}
-    \int_{\mathbb{R}^n} f(x) e^{-i \langle x, y \rangle} \, dx 
+    \int_{\mathbb{R}^n} f(x) e^{-i \langle x, y \rangle} \, dx,
 \end{equation}
-aparentemente más sencilla. Lo cierto es que esto obliga a que la reconstrucción se haga mediante la fórmula 
+definición que aparece en~\cite{FourierTransformsClassic}, y es aparentemente más sencilla. Lo cierto es que esto obliga a que la reconstrucción se haga mediante la fórmula 
 \begin{equation}
-   \frac{1}{(2 \pi)^n} \int_{\mathbb{R}^n} f(x) e^{i \langle x, y \rangle} \, dy \quad 
+   \frac{1}{(2 \pi)^n} \int_{\mathbb{R}^n} f(x) e^{i \langle x, y \rangle} \, dy ,
 \end{equation}
-Por lo que la constante (ligada  a $2 \pi$) aparece en la reconstrucción, esta vez dependiendo del número de dimensiones.
+por lo que la constante (ligada  a $2 \pi$) aparece en la reconstrucción, esta vez dependiente del número de dimensiones.
 
-En general si definimos la transformada de Fourier como 
+\noindent En general, si definimos la Transformada de Fourier como 
 \begin{equation}
-    a\int_{\mathbb{R}^n} f(x) e^{-i \langle x, y \rangle} \, dx 
+    a\int_{\mathbb{R}^n} f(x) e^{-i \langle x, y \rangle} \, dx ,
 \end{equation}
-Esto obliga a que la reconstrucción venga dada por 
+esto obliga a que la reconstrucción venga dada por 
 \begin{equation}
-   b\int_{\mathbb{R}^n} f(x) e^{i \langle x, y \rangle} \, dy \quad 
+   b\int_{\mathbb{R}^n} f(x) e^{i \langle x, y \rangle} \, dy, \quad 
 \end{equation}
-donde $a \cdot b = \frac{1}{(2\pi)^n}$
+donde $a \cdot b = \frac{1}{(2\pi)^n}$.
 
-\noindent Por tanto, no podemos eludir la presencia de la constante $2 \pi$ en ninguna instancia. Sin embargo, parece que con nuestra elección minimizamos el riesgo de cometer un error ya que al incorporar la constante en la exponencial, obtenemos fórmulas completamente simétricas y válidas para cualquier dimensión. Pero si el lector aún no ha quedado convencido, es crucial señalar que el teorema de convolución, que será el núcleo central de este trabajo, no involucrará la presencia de constantes añadidas (aunque estas constantes sí aparecerán en el contexto de la transformada  de Fourier y la derivación \textbf{d}).
+\noindent Por tanto, no podemos eludir la presencia de la constante $2 \pi$ en ninguna instancia. Sin embargo, parece que con nuestra elección minimizamos el riesgo de cometer un error, ya que al incorporar la constante en la exponencial, obtenemos fórmulas completamente simétricas y válidas para cualquier dimensión. Pero si el lector aún no ha quedado convencido, es crucial señalar que, usando la definición (\ref{def:definicion}), el Teorema de Convolución (que será el núcleo central de este trabajo) no involucrará la presencia de constantes añadidas (aunque estas constantes sí aparecerán en el contexto de la Transformada  de Fourier y la derivación).
 \end{observacion}
 
-\section{Propiedades de la transformada de Fourier}
-Demostraremos algunas propiedades de la transformada de Fourier para comenzar a familiarizarnos con la definición.
+\section{Propiedades de la Transformada de Fourier}
+Demostraremos algunas propiedades de la Transformada de Fourier para comenzar a familiarizarnos con la definición.
 
-\begin{proposicion}
-    Sean $f,g \in \mathscr{L}^1(\mathbb{R}^n)$ y sea $\alpha,\beta \in \mathbb{C}$. Entonces
+\begin{proposicion}\label{prop_lineal}
+    Sean $f,g \in \mathscr{L}^1(\mathbb{R}^n)$ y sean $\alpha,\beta \in \mathbb{C}$. Entonces
     \begin{equation}
-         \widehat{\alpha f+\beta g} = \alpha \widehat{f} + \beta \widehat{g}
+         \widehat{\alpha f+\beta g} = \alpha \widehat{f} + \beta \widehat{g}.
     \end{equation}
 \end{proposicion}
 
 \begin{proof}
-Para cada $y \in \mathbb{R}^n$ se verifica que
-\begin{equation}
-\begin{aligned}
-\widehat{ \alpha f+ \beta g} &= \int_{ \mathbb{R}^n}(\alpha f(x) + \beta g(x)) e^{-2\pi i \langle x, y \rangle} \, dx 
+Para cada $y \in \mathbb{R}^n$, se verifica que
+\begin{align*}
+\widehat{ \alpha f+ \beta g} &= \int_{ \mathbb{R}^n}(\alpha f(x) + \beta g(x)) e^{-2\pi i \langle x, y \rangle} \, dx \\
 &= \alpha \int_{\mathbb{R}^n} f(x)e^{-2 \pi i \langle x, y \rangle} \, dx + \beta \int_{\mathbb{R}^n} g(x)e^{-2 \pi i \langle x, y \rangle} \, dx
-\end{aligned}
-\end{equation}
-\begin{equation}
-= \alpha \widehat{f} + \beta \widehat{g}.
-\end{equation}
+= \alpha \widehat{f} + \beta \widehat{g}. \qedhere
+\end{align*}
 \end{proof}
 
-\begin{proposicion}
+\begin{proposicion}\label{conju}
 Sean $f,g \in \mathscr{L}^1(\mathbb{R}^n)$. Entonces 
 %\renewcommand{\labelenumi}{\roman{enumi})}
 
 \begin{enumerate}
-    \item $\widehat{\overline{f}}(y) = \overline{\widehat{f}(-y)}$
-    \item $\widehat{f}(-y) = \widehat{f}(-y)$
-    \item $\widehat{f}(-y) = \overline{\widehat{f}(y)}$
+    \item $\widehat{\overline{f}}(y) = \overline{\widehat{f}(-y)}$,
+    \item $\widehat{\widetilde{f}(}y) = \widehat{f}(-y)$,
+    \item $\widehat{\overline{\widetilde{f}(}}y) = \overline{\widehat{f}(y)}$.
 \end{enumerate}
 \end{proposicion}
 
 \begin{proof}
+\begin{align*}
+      \widehat{\overline{f}}(y) &= \int_{\mathbb{R}^n} \overline{f(x)}e^{-2\pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n} \overline{f(x)e^{2\pi i \langle x, y \rangle}} \, dx =  \overline{\int_{\mathbb{R}^n} f(x)e^{2\pi i \langle x, y \rangle} \, dx } =\overline{\widehat{f}(-y)}, \\[0.2cm]
+       \widehat{\widetilde{f}(}y) &= \int_{\mathbb{R}^n} f(-x)e^{-2\pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n} f(x)e^{-2\pi i \langle (-x), y \rangle} \, dx  =  \int_{\mathbb{R}^n} f(x)e^{2\pi i \langle x, (-y) \rangle} \, dx  =\widehat{f}(-y),\\[0.2cm]
+       \widehat{\overline{\widetilde{f}(}}y) &= \int_{\mathbb{R}^n} \overline{f(-x)}e^{-2\pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n} \overline{f(-x)e^{2\pi i \langle x, y \rangle}} \, dx  =  \overline{\int_{\mathbb{R}^n} f(x)e^{-2\pi i \langle x, y \rangle} \, dx } =\overline{\widehat{f}(y)}. \qedhere
+\end{align*} 
+\end{proof}
+
+
+
+
+\noindent Las siguientes proposiciones son útiles en lo que se refiere al cálculo de Transformadas de Fourier. Las demostraciones se reducen a efectuar un cambio de variable adecuado en la integral.
+
+\begin{proposicion}\label{esca}
+    Sea $f \in \mathscr{L}^1(\mathbb{R}^n)$ y sea $a \in \mathbb{R}^+$. Entonces, para cada $y \in \mathbb{R}^n$, se tiene:
+    \begin{equation}
+        \widehat{H_af}(y) = a^{-n}\widehat{f}(a^{-1}y).
+    \end{equation}
+\end{proposicion}
+
+\begin{proof}
+\begin{equation*}
+     \widehat{H_af}(y) = \int_{\mathbb{R}^n}f(ax) e^{-2 \pi i \langle x, y \rangle} \, dx = \frac{1}{a^n}\int_{\mathbb{R}^n}f(x) e^{-2 \pi i \langle x, \frac{y}{a} \rangle} \, dx =  a^{-n}\widehat{f}(a^{-1}y). \qedhere
+\end{equation*}
+\end{proof}
+
+
+\begin{proposicion}\label{prop:tras}
+    Sea $f \in \mathscr{L}^1(\mathbb{R}^n)$ y sea $t \in \mathbb{R}^n$. Entonces, para cada $y \in \mathbb{R}^n$, se tiene:
+    \begin{equation}
+        \widehat{\tau_tf}(y) =  e^{-2 \pi i \langle t, y \rangle}\widehat{f}(y).
+    \end{equation}
+    
+\end{proposicion}
+
+\begin{proof}
+\begin{align*}
+        \widehat{\tau_tf}(y) &= \int_{\mathbb{R}^n}f(x-t) e^{-2 \pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n}f(x) e^{-2 \pi i \langle (x+t), y \rangle} \, dx \\ &=  \int_{\mathbb{R}^n}f(x) e^{-2 \pi i \langle x, y \rangle} e^{-2 \pi i \langle t, y \rangle} \, dx = e^{-2 \pi i \langle t, y \rangle}\widehat{f}(y). \qedhere
+\end{align*}
+\qedhere
+\end{proof}
+
+
+\begin{proposicion}
+    Sea $f \in \mathscr{L}^1(\mathbb{R}^n)$ y sea $t \in \mathbb{R}^n$. Entonces, para cada $y \in \mathbb{R}^n$, se tiene:
+    \begin{equation*}
+        \widehat{\mu_tf}(y) = \widehat{f}(y-t). \qedhere
+    \end{equation*}
+\end{proposicion}
+
+\begin{proof}
 \begin{alignat}{3}
-        \widehat{\overline{f}}(y) &= \int_{\mathbb{R}^n} \overline{f(x)}e^{-2\pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n} \overline{f(x)e^{2\pi i \langle x, y \rangle}} \, dx \\ &=  \overline{\int_{\mathbb{R}^n} f(x)e^{2\pi i \langle x, y \rangle} \, dx } =\overline{\widehat{f}(-y)} \\
-        \widehat{f}(-y) &= \int_{\mathbb{R}^n} f(-x)e^{-2\pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n} \overline{f(x)e^{-2\pi i \langle (-x), y \rangle}} \, dx \\ &=  \overline{\int_{\mathbb{R}^n} f(x)e^{2\pi i \langle x, (-y) \rangle} \, dx } =\overline{\widehat{f}(-y)} \\
-\end{alignat}
-\begin{alignat}{3}
-       \widehat{\overline{f}}(y) &= \int_{\mathbb{R}^n} \overline{f(-x)}e^{-2\pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n} \overline{f(-x)e^{2\pi i \langle x, y \rangle}} \, dx \\ &=  \overline{\int_{\mathbb{R}^n} f(x)e^{-2\pi i \langle x, y \rangle} \, dx } =\overline{\widehat{f}(y)}
+        \widehat{\mu_tf}(y) &= \int_{\mathbb{R}^n}e^{2 \pi i \langle t, x \rangle}f(x) e^{-2 \pi i \langle x, y \rangle} \, dx = \int_{\mathbb{R}^n}f(x) e^{-2 \pi i \langle x, (y-t) \rangle} \, dx   = \widehat{f}(y-t). \qedhere
 \end{alignat}
 \end{proof}
 
+\begin{proposicion}\label{prop:div}
+    Si $f \in \mathscr{L}^1(\mathbb{R}^n)$ 
+ es tal que $f(x_1, \ldots, x_n) = f_1(x_1) \cdot f_2(x_2) \cdots f_n(x_n)  
+ \\ \quad \forall (x_1,x_2, \ldots, x_n) \in \mathbb{R}^n$, con $f_1,f_2, \ldots, f_n \in \mathscr{L}^1(\mathbb{R}^n)$. Entonces
+    \begin{equation}
+        \widehat{f}(y_1,y_2 \ldots, y_n) =  \widehat{f_1}(y_1) \cdot \widehat{f_2}(y_2) \cdots \widehat{f_n}(y_n) \quad \forall y = (y_1,y_2, \ldots, y_n) \in \mathbb{R}^n.
+    \end{equation}
+\end{proposicion}
+
+
+\begin{proof}
+Sea $y = (y_1,y_2, \ldots, y_n) \in \mathbb{R}^n$. Entonces, se tiene que
+\begin{equation*}
+\begin{split}
+    \widehat{f}(y) &= \int_{\mathbb{R}^n} (f_1(x_1)e^{-2\pi i (x_1y_1)} \cdot f_2(x_2)e^{-2\pi i (x_2y_2)} \cdots f_n(x_n)e^{-2\pi i (x_ny_n)} )  \, dx_1dx_2\ldots dx_n \\
+    &= \prod_{j=1}^{n}\int_{\mathbb{R}}f_j(x_j)e^{-2\pi i x_j y_j} dx_j =  \prod_{j=1}^{n}\widehat{f_j}(y_j) . \qedhere
+\end{split}
+\end{equation*}
+
+\end{proof}
+\begin{observacion}
+    Esta proposición nos permite reducir el cálculo de la Transformada de Fourier de una función integrable en $\mathbb{R}^n$ al caso $n=1$ en determinadas situaciones.
+\end{observacion}
+
+
+
+\section{Permutación integratoria de la Transformada}
+El siguiente teorema nos permite intercambiar la Transformada dentro de la integral. Esta técnica resulta útil como estrategia para abordar ciertas demostraciones.
+\begin{teorema}\label{teo:cambio}
+    Sean $f,g \in \mathscr{L}^1(\mathbb{R}^n)$. Entonces,
+    \begin{equation}
+        \int_{\mathbb{R}^n} \widehat{f}(x)g(x) \, dx =  \int_{\mathbb{R}^n} f(x) \widehat{g}(x) \, dx.
+    \end{equation}
+\end{teorema}
+
+\begin{proof}
+Por un lado tenemos que la función $(x,y) \mapsto f(x)g(y)e^{-2 \pi i \langle x, y \rangle}$ es medible, y por otro se tiene que 
+\begin{equation}
+\begin{aligned}
+    &\int_{\mathbb{R}^n}\int_{\mathbb{R}^n}|f(x)g(y)e^{-2 \pi i \langle x, y \rangle}| \,dx \, dy = \\
+    &= \int_{\mathbb{R}^n}\int_{\mathbb{R}^n}|f(x)g(y)| \,dx \, dy = \int_{\mathbb{R}^n}|f(x)| \,dx \int_{\mathbb{R}^n}|g(y)| \, dy < \infty,
+\end{aligned}
+\end{equation}
+
+
+\noindent Por lo que el Teorema de Fubini-Tonelli asegura que la función es integrable en $\mathbb{R}^{n+n}$ y
+
+\begin{equation}
+\begin{aligned}
+    \int_{\mathbb{R}^n} \widehat{f}(x)g(x) \, dx &= \int_{\mathbb{R}^n}\int_{\mathbb{R}^n}f(x)g(y)e^{-2 \pi i \langle x, y \rangle} \,dy \,dx  \\
+    &= \int_{\mathbb{R}^n}\int_{\mathbb{R}^n}f(x)g(y)e^{-2 \pi i \langle x, y \rangle} \,dx \,dy = \int_{\mathbb{R}^n} f(x) \widehat{g}(x) \, dx. \qedhere
+\end{aligned}
+\end{equation}
+\end{proof}
+
+\section{Magnitud de la Transformada de Fourier}
+En esta sección estudiaremos la magnitud de la Transformada de Fourier, proporcionaremos una acotación de esta y demostraremos el Lema de Riemann-Lebesgue.
+
+
+\begin{teorema}\label{2.2}
+    Sea  $f \in \mathscr{L}^1(\mathbb{R}^n)$. Entonces
+    \begin{equation}
+        || \widehat{f}||_{L^{\infty}} \leq ||f||_{L^{1}}.
+    \end{equation}    
+\end{teorema}
+
+\begin{proof}
+    Para cada $y \in \mathbb{R}^n$, se tiene que
+    \begin{equation}
+     |\widehat{f}(y)| = \left| \int_{\mathbb{R}^n} f(x) e^{-2\pi i \langle x, y \rangle} \, dx \right| \leq  \int_{\mathbb{R}^n} |f(x) e^{-2\pi i \langle x, y \rangle}| \, dx  =\int_{\mathbb{R}^n} |f(x)| \, dx = ||f||_{1}.
+    \end{equation}  
+    De aquí se deduce que 
+    $      || \widehat{f}||_{L^{\infty}} = \underset{\substack{y \in \mathbb{R}^n}}{\sup}|\widehat{f}(y)| \leq||f||_{1}$.
+\end{proof}
+
+
+
+
+
+\begin{teorema}[Lema de Riemann-Lebesgue]\label{2.3} Sea $f \in \mathscr{L}^1(\mathbb{R}^n)$. Entonces,
+\begin{equation}
+     \underset{\substack{||y|| \rightarrow \infty}}{\lim}\widehat{f}(y)=0.
+\end{equation}
+\end{teorema}
+
+\noindent Antes de realizar la prueba recordamos algunas definiciones y resultados conocidos.
+\begin{definicion}
+Un  intervalo en $\mathbb{R}^n$ será un producto cartesiano de intervalos en $\mathbb{R}$ y denotaremos por $\mathcal{J}$ al  conjunto de todos los intervalos acotados en $\mathbb{R}^n$.
+\end{definicion}
+
+\begin{definicion}\label{def:escalonada}
+    Llamaremos función escalonada a toda combinación lineal de funciones características de
+intervalos acotados, es decir, a toda función $h: \mathbb{R}^n \rightarrow \mathbb{C}$ de la forma
+\begin{equation}
+h = \sum_{k=1}^{n} \alpha_k \upchi_{J_k} \quad \text{donde} \quad n \in \mathbb{N}, \quad \alpha_1, \alpha_2, \ldots, \alpha_n \in \mathbb{C}, \quad J_1, J_2, \ldots, J_n \in \mathcal{J}.
+\end{equation}
+
+\end{definicion}
+
+\begin{observacion}
+
+El conjunto formado por todas las clases de equivalencia que contienen una función escalonada en $\mathbb{R}^n$ es denso en $L^1(\mathbb{R}^n)$. Como consecuencia, para cada $f \in \mathscr{L}^1(\mathbb{R}^n)$, existe una sucesión $\{g_n\}$ de funciones escalonadas que verifica:
+\begin{align*}
+&\{g_n(x)\} \rightarrow f(x) \text{ p.c.t. } x \in \mathbb{R}^n,
+&\lim_{n \to \infty} \int_{\mathbb{R}^n} |f - g_n| \, dx = 0.
+\end{align*}
+\end{observacion}
+
+
+\begin{proof}[Demostración del Lema de Riemann-Lebesgue] La prueba está divida en dos partes: primero se demuestra el teorema para cualquier función escalonada, y posteriormente, usando un argumento de densidad, se extiende el resultado a cualquier función integrable en $\mathbb{R}^n$.
+\vspace{0.1cm}
+
+
+
+\noindent Dado un intervalo $\left[a,b\right]$  en $\mathbb{R}$, consideramos la función característica $\upchi_{\left[a,b\right]}$. Calculamos la Transformada de dicha función.
+\begin{equation}
+\widehat{\upchi_{\left[a,b\right]}}(0) = \int_{\mathbb{R}} \upchi_{\left[a,b\right]}\, dx = b-a,
+\end{equation}
+\begin{equation}\label{eq:caract}
+\widehat{\upchi_{\left[a,b\right]}}(y) = \int_{\mathbb{R}} \upchi_{\left[a,b\right]}e^{-2\pi i xy} \, dx =\int_{a}^{b} e^{-2\pi i  x y } \, dx = \frac{e^{-2 \pi i y a}-e^{-2 \pi i y b}}{2 \pi i y} \, \, \, \,\forall y \neq 0 .
+\end{equation}
+
+\noindent Observamos que
+\begin{equation}   
+\underset{\substack{|y| \rightarrow \infty}}{\lim}\widehat{\upchi_{\left[a,b\right]}}(y)=0.
+\end{equation}
+
+
+\noindent Tomamos ahora un  intervalo en $\mathbb{R}^n$, $ J = [a_1, b_1] \times [a_2, b_2] \times \cdots \times [a_n, b_n]$ y  la función  característica $\upchi_{J}$. Procedemos calculando la Transformada de Fourier de $\upchi_{J}\in \mathscr{L}^1(\mathbb{R}^n)$:
+\begin{align}
+    \widehat{\upchi_{J}}(y_1, \ldots, y_n) &= \int_{\mathbb{R}^n} \upchi_{J} e^{-2\pi i \langle x, y \rangle} \, dx \nonumber \\
+    &= \int_{a_n}^{b_n}\ \cdots \int_{a_2}^{b_2}\left( \int_{a_1}^{b_1}  e^{-2\pi i x_1y_1 } \, dx_1\right) \, e^{-2\pi i (x_2y_2 + \ldots + x_ny_n) } \, dx_2 \ldots dx_n \\ &= \prod_{j=1}^{n}\left( \int_{a_j}^{b_j}e^{-2 \pi i x_jy_j} dx_j\right) .
+\end{align}
+
+
+
+\noindent Sea  un elemento $y = (y_1, y_2, \ldots ,y_n)\neq 0 \in \mathbb{R}^n $. Existe $j_0 \in \{1, \ldots, n\}$ tal que $|y_{j_0}| > \frac{||y||}{\sqrt{n}}$. 
+Notemos que, para todo $j \in \{1, \ldots, n\}$, se tiene 
+\begin{equation}
+    \left| \int_{a_j}^{b_j} e^{-2 \pi i x y_j} dx \right| \leq  \int_{a_j}^{b_j} \left| e^{-2 \pi i x y_j} \right| dx  = (b_j-a_j).
+\end{equation}
+
+\noindent Por otro lado, 
+
+\begin{equation}
+\left|\int_{a_{j_0}}^{b_{j_0}}  e^{-2 \pi i x y_j}  dx  \right| = \left|\frac{e^{-2 \pi i y_{j_0} a_{j_0} }-e^{-2 \pi i y_{j_0}  b_{j_0} }}{2 \pi i _{j_0} }\right| \leq \frac{2}{|2 \pi i y_{j_0}|} <  \frac{\sqrt{n}}{ \pi ||y||}.
+\end{equation}
+
+\noindent Por tanto, tenemos que 
+\begin{equation}
+|\widehat{\upchi_{J}}(y)| \leq \prod_{\substack{j = 1\\ \substack{j \neq j_0}}}^{n}(b_j-a_j)  \cdot \frac{\sqrt{n}}{ \pi ||y||} \leq \max_{1 \leq j_0 \leq n}\prod_{\substack{j = 1\\ \substack{j \neq j_0}}}^{n}(b_j-a_j)  \cdot \frac{\sqrt{n}}{ \pi ||y||} =  c\cdot \frac{\sqrt{n}}{ \pi ||y||},
+\end{equation}
+donde la constante $c$ no depende de $j_0$.
+Atendiendo a esta última expresión, deducimos que 
+\begin{equation}   
+\underset{\substack{||y|| \rightarrow \infty}}{\lim}\widehat{\upchi_{J}}(y)=0.
+\end{equation}
+
+\noindent Dada una función escalonada $g : \mathbb{R}^n \rightarrow \mathbb{R}$, esta será combinación lineal finita de funciones del tipo $X_J$. Podemos concluir 
+entonces que, gracias a la aditividad de los límites, el teorema se cumple para $g$. Así, se tendrá que 
+\begin{equation}   
+\underset{\substack{||y|| \rightarrow \infty}}{\lim}\widehat{g}(y)=0.
+\end{equation}
+Generalizamos ya el resultado. Dada ahora una función $f \in \mathscr{L}^1(\mathbb{R}^n)$ y $\epsilon > 0$, existe una función escalonada $h \in  \mathscr{L}^1(\mathbb{R}^n)$  de manera que $||f\,-\,h||_{L^1} < \frac{\epsilon}{2}$. Por tanto, por lo probado anteriormente, existe una constante positiva $M$ tal que si $|y| > M$ entonces $|\widehat{h}(y)| <  \frac{\epsilon}{2}$. Luego 
+\begin{equation}
+    |\widehat{f}(y)| \leq |\widehat{f}(y)-\widehat{h}(y)|+|\widehat{h}(y)| \leq ||f-h||_{L^1} +\frac{\epsilon}{2} \leq \epsilon,
+\end{equation}
+
+\noindent para $||y||> M$, de donde se deduce que $\underset{\substack{||y||\rightarrow \infty}}{\lim}\widehat{f}(y)=0$, y hemos terminado.
+\end{proof}
+
+
+\section{Continuidad de la Transformada de Fourier}
+A continuación se describe la continuidad de la Transformada de Fourier $\widehat{f}$ dada $f \in  \mathscr{L}^1(\mathbb{R}^n)$.
+
+\begin{teorema}\label{2.4}
+Sea $f \in  \mathscr{L}^1(\mathbb{R}^n)$. Entonces la función $\widehat{f}$ es continua en $\mathbb{R}^n$.  
+\end{teorema}
+
+
+\begin{proof}
+Podemos tratar la integral que aparece en \ref{def:definicion} como una integral dependiente de un parámetro.
+\noindent Sea $\gamma : \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{C}$ la función dada por
+\begin{equation}
+    \gamma(x,y) = 
+     f(x) e^{-2\pi i \langle x, y \rangle} .
+\end{equation}
+Se cumple:
+\begin{enumerate}
+    \item Para cada $y \in \mathbb{R}^n$, la función $x \mapsto \gamma(x,y)$  es integrable en $\mathbb{R}^n$,
+    \item Para cada $x \in \mathbb{R}^n$, la función $y \mapsto \gamma(x,y)$  es continua en $\mathbb{R}^n$,
+    \item $|\gamma(x,y)| = |f(x) e^{-2\pi i \langle x, y \rangle}| = |f(x)| \quad \forall x,y \in \mathbb{R}^{n}$.
+\end{enumerate}
+Puesto que $|f|$ es integrable en $\mathbb{R}^n$, el Teorema de continuidad de las integrales dependientes de un parámetro garantiza que la función $\widehat{f}$ es continua en $\mathbb{R}^n$.
+\end{proof}
+
+
+\begin{observacion}
+\noindent Los Teoremas \ref{2.4} y \ref{2.3} aseguran que  $\widehat{f}$ es uniformemente continua en $\mathbb{R}^n$. 
+\end{observacion}
+
+
+\begin{observacion}
+    Los Teoremas \ref{2.4} y \ref{2.3} aseguran que  $\widehat{f} \in C_0 (\mathbb{R}^n)$, para cada $f \in \mathscr{L}^1( \mathbb{R}^n)$. Teniendo esto en cuenta junto con la Proposición \ref{prop_lineal} y el  Teorema \ref{2.2}, concluimos que la Transformada de Fourier
+    \begin{equation}
+        \widehat{} :  \mathscr{L}^1(\mathbb{R}^n) \rightarrow C_0(\mathbb{R}^n)
+    \end{equation}
+    define un operador lineal y continuo.
+\end{observacion}
+
+
+
+
+
+
+
+\section{Transformada de Fourier y derivación}
+En esta sección se pretende analizar en detalle cómo se interrelacionan la Transformada de Fourier y la operación de derivación. Este análisis conlleva dos enfoques de estudio: uno que supone calcular la Transformada de Fourier de la derivada de una función, y relacionarla con la Transformada de Fourier de la función original; y otro que consiste en abordar la derivación de la función Transformada.
+
+
+\noindent Comenzaremos por introducir un poco de notación.
+\noindent Para $\alpha = (\alpha_1, \alpha_2, \ldots ,\alpha_n) \in (\mathbb{N} \cup {0})^n$ e $y = (y_1,y_2, \ldots, y_n) \in \mathbb{R}^n$ notaremos
+\begin{equation}
+|\alpha| = \sum_{k=1}^{n}\alpha_k \quad \text{e} \quad y^\alpha = \prod_{k=1}^{n} y_k^{\alpha_k} = y_{1}^{\alpha_1}y_{2}^{\alpha_2}\cdots y_{n}^{\alpha_n}.
+\end{equation}
+
+\noindent $\alpha$ se denominará multi-índice.
+
+\noindent Si $f: \mathbb{R}^n \rightarrow \mathbb{C}$ es una función de clase $C^\infty$, escribimos
+\begin{equation}
+   D_{\alpha}f = \frac{\partial^{|\alpha|f}}{\partial x_{1}^{\alpha_1}\partial x_{2}^{\alpha_2} \cdots \partial x_{n}^{\alpha_n}}.
+\end{equation}
+\noindent Para $|\alpha| = 0$, decimos que $ D_{\alpha}f = f$.
+
+\begin{definicion}
+    Dado $k \in \{1, \ldots, n\}$, denotaremos $e_k$ al vector cuyas componentes son todas nulas salvo la k-ésima. Se tiene que, para $\alpha = e_k$, 
+    \begin{equation}
+        D_{\alpha}f = \frac{\partial f}{\partial x_k}.
+    \end{equation}
+\end{definicion}
+
+\begin{definicion}
+    Denominaremos $A_{\alpha}$ al conjunto:
+    \begin{equation}
+        A_{\alpha} = \{\beta \in (\mathbb{N} \cup \{0\})^n :  \, |\beta| \leq |\alpha|\}.
+    \end{equation}
+\end{definicion}
+
+\subsection{Transformada de la derivada}
+
+\begin{teorema} \label{teoderi}
+Dados $f \in  \mathscr{L}^1(\mathbb{R}^n)$ y $k \in \{1,\ldots,n\}$, si existe $ \frac{\partial f}{\partial x_k}$ y además  $ \frac{\partial f}{\partial x_k} \in \mathscr{L}^1(\mathbb{R}^n)$,
+entonces
+\begin{equation}
+    \widehat{\frac{\partial{f}}{\partial{x_k}}}(y) = (2\pi iy_k) \widehat{f}(y)  \quad \forall y \in \mathbb{R}^n.
+\end{equation}
+
+\noindent Equivalentemente, para $\alpha = e_k$,
+\begin{equation}
+    \widehat{D_{\alpha}f}(y) = (2\pi i)^{|\alpha|} y^{\alpha} \widehat{f}(y) \quad \forall y \in \mathbb{R}^n.
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+\noindent
+
+\noindent Por hipótesis sabemos que dado $y \in \mathbb{R}^n$, la función $(x_1,\ldots,x_n) \mapsto  \frac{\partial{f}}{\partial{x_k}}(x_1,\ldots,x_n)e^{- 2 \pi i\sum\limits_{i=1}^{n} x_iy_i}$ es medible  e integrable en $\mathbb{R}^n$:
+\begin{equation}
+    \left|  \frac{\partial{f}}{\partial{x_k}}(x)e^{- 2 \pi i\sum\limits_{i=1}^{n} x_iy_i}\right| = \left| \frac{\partial{f}}{\partial{x_k}}(x) \right| < \infty.
+\end{equation}
+
+\noindent La clave de la demostración radica en usar el Teorema de Fubini y posteriormente aplicar la fórmula de integración por partes en $\mathbb{R}$ a la función $x_k \mapsto \frac{\partial{f}}{\partial{x_k}}(x_1,\ldots,x_n)e^{-2 \pi i x_ky_k}$.
+\begin{align}
+    \widehat{\frac{\partial{f}}{\partial{x_k}}}(y) 
+    &= \int_{\mathbb{R}^n}\frac{\partial{f}}{\partial{x_k}}(x_1,\ldots,x_n)e^{- 2 \pi i\sum\limits_{i=1}^{n} x_iy_i}dx_1\ldots dx_{k-1}dx_kdx_{k+1}\ldots dx_n \\
+    &= \int_{\mathbb{R}}\ldots\left(\int_{\mathbb{R}}\frac{\partial{f}}{\partial{x_k}}(x_1,\ldots,x_n)e^{-2 \pi i x_ky_k}dx_k\right) e^{- 2 \pi i\sum\limits_{i=1, i\neq k}^{n} x_iy_i} dx_1 \ldots dx_{k-1}dx_{k+1}\ldots dx_n \\
+    &= (2 \pi i y_k)\int_{\mathbb{R}}\ldots\int_{\mathbb{R}} f(x_1,\ldots,x_n)e^{- 2 \pi i\sum\limits_{i=1}^{n} x_iy_i}dx \\
+    &= (2\pi iy_k) \widehat{f}(y). \qedhere
+\end{align}
+\end{proof}
+
+
+
+
+\begin{teorema}
+ Sea $\alpha \in (\mathbb{N} \cup \{0\})^n$ y supongamos que existe $D_{\beta}f \, \,  \forall  \beta \in A_{\alpha}$ de modo que
+\begin{equation}
+    D_{\beta}f \in \mathscr{L}^1(\mathbb{R}^n) \quad \forall  \beta \in A_{\alpha}.
+\end{equation}
+Entonces
+\begin{equation}
+    \widehat{D_{\alpha}f}(y) = (2\pi i)^{|\alpha|}y^\alpha \widehat{f}(y) \quad \forall y \in \mathbb{R}^n.
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+    Para un $\alpha \in ( \mathbb{N} \cup \{0\})^n$ cualquiera, basta usar el Teorema \ref{teoderi} y realizar inducción sobre $|\alpha|$. 
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Derivada de la Transformada}
+\begin{teorema}\label{teo:der_trans}
+   Sea $f \in \mathscr{L}^1(\mathbb{R}^n)$ tal que se cumple la condición 
+   \begin{equation}\int_{\mathbb{R}^n}|x_kf(x)| \, dx < \infty,
+   \end{equation}
+   donde $x_k$ denota la coordenada k-ésima de $x$.
+   Entonces $\widehat{f}$ es derivable con respecto a $y_k$, y
+   \begin{equation}\label{eq:ecuacion}
+    \frac{\partial \widehat{f}}{\partial y_k}(y) = (-2 \pi ix_k f (x))\,\,\widehat{  } \,\, (y) \quad \forall  y \in \mathbb{R}^n.
+   \end{equation}
+   Equivalentemente, para $\alpha = e_k $,
+   \begin{equation}
+     D_{\alpha}\widehat{f}(y) = (-2 \pi ix^{\alpha} f (x))\,\,\widehat{  } \,\, (y) \quad \forall  y \in \mathbb{R}^n.
+   \end{equation}
+\end{teorema}
+
+
+\begin{proof}
+\noindent Sea la función $\gamma : \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{C}$ definida por 
+\begin{equation}
+    \gamma(x,y) = 
+     f(x) e^{-2\pi i \langle x, y \rangle}.
+\end{equation}
+Esta función es integrable con respecto la variable $x$ y derivable con respecto a la variable $y_k$.
+Tenemos que:
+\begin{equation}
+    \frac{\partial \gamma}{\partial y_k}(x,y) = \frac{\partial \left(f(x) e^{-2\pi i \langle x, y \rangle}\right)}{\partial y_k} = -2 \pi  i x_k f(x) e^{-2\pi i \langle x, y \rangle}. 
+\end{equation}
+Además,
+\begin{equation}
+    \left|\frac{\partial \gamma}{\partial y_k}(x,y)\right| = 2 \pi   |x_k f(x)| \quad \forall x,y \in \mathbb{R}^n.
+\end{equation}
+Como por hipótesis la función $x_kf \in \mathscr{L}^1(\mathbb{R}^n)$, el Teorema de derivación de integrales dependientes de un parámetro asegura que $\widehat{f}$ es derivable con respecto a $y_k$, y también:
+ \begin{align}
+    \frac{\partial \widehat{f}}{\partial y_k}(y) &= \int_{\mathbb{R}^n}\frac {\partial}{\partial y_k}\left(f(x) e^{-2\pi i \langle x, y \rangle}\right)dx \\ &= \int_{\mathbb{R}^n} (-2 \pi i x_k) \left(f(x) e^{-2\pi i \langle x, y \rangle}\right)dx  =
+     (-2 \pi ix_k f (x))\,\,\widehat{  } \,\, (y).\qedhere
+\end{align}
+\end{proof}
+
+\begin{corolario}\label{coro:deri2}
+Sea 
+   $f \in \mathscr{L}^1(\mathbb{R}^n)$, y $n \in \mathbb{N}$. Supongamos que se cumple la condición 
+   \begin{equation}\int_{\mathbb{R}^n}|x_{k}^{n}f(x)| \, dx < \infty,
+   \end{equation}
+   donde $x_k$ denota la coordenada k-ésima de $x$.
+   Entonces, $\widehat{f}$ es $n$ veces derivable con respecto a $y_k$, y se verifica que
+   \begin{equation}\label{eq:ecuacion}
+    \frac{\partial \widehat{f}}{\partial y_k}(y) = ((-2 \pi ix_k)^nf(x))\,\,\widehat{  } \,\, (y) \quad \forall  y \in \mathbb{R}^n.
+   \end{equation}
+    Equivalentemente, para $\alpha = ne_k $,
+   \begin{equation}
+     D_{\alpha}\widehat{f}(y) = ((-2 \pi i)^{|\alpha|}x^{\alpha} f (x))\,\,\widehat{  } \,\, (y) \quad \forall  y \in \mathbb{R}^n.
+   \end{equation}
+\end{corolario}
+
+
+
+
+
+\begin{proof}
+Para cada $j \in \{1, \ldots ,n \}$, tenemos que:
+\begin{equation}
+    \int_{\mathbb{R}^n}|x_{k}^{j}f(x)| \, dx = \int_{|x_k|\leq 1}|x_{k}^{j}f(x)|dx+\int_{|x_k|>1}|x_{k}^{j}f(x)| \, dx\leq ||f||_1 +  \int_{\mathbb{R}^n }|x_{k}^{n}f(x)| \, dx < \infty.
+\end{equation}
+
+\noindent Luego se obtiene que $x_{k}^jf \in \mathscr{L}^1(\mathbb{R}^n)$. Realizando ahora una aplicación inductiva del teorema anterior, se demuestra el resultado buscado.
+\end{proof}
+
+\begin{teorema}\label{teo:der_trans}
+   Sea $f \in \mathscr{L}^1(\mathbb{R}^n)$ y $\alpha = (\alpha_1, \ldots \alpha_n) \in (\mathbb{N} \cup \{0\})^n$. Supongamos que se cumple la condición 
+   \begin{equation}\int_{\mathbb{R}^n}|x^{\beta}f(x)| \, dx < \infty  \quad \forall \beta \in A_{\alpha}.
+   \end{equation}
+   
+\noindent Entonces, se tiene que
+  
+   \begin{equation}
+     D_{\alpha}\widehat{f}(y) = ((-2 \pi i)^{|\alpha|}x^{\alpha} f (x))\,\,\widehat{  } \,\, (y) \quad \forall y \in \mathbb{R}^n.
+   \end{equation}
+\end{teorema} 
+
+
+\begin{proof}
+     Para un $\alpha \in ( \mathbb{N} \cup \{0\})^n$ cualquiera, basta con usar el Teorema \ref{teo:der_trans} y realizar inducción sobre $|\alpha|$.
+\end{proof}
+
+
+
+\section{Ejemplos}
+\begin{definicion}\label{gauss}
+    Definimos $G : \mathbb{R}^n \rightarrow \mathbb{R}$ función de $  \mathscr{L}^1(\mathbb{R}^n)$ dada por
+    \begin{equation}
+        G(x) = e^{- \pi ||x||^2} =  e^{- \pi\sum\limits_{k=1}^{n} x_k^2} \quad \forall x \in \mathbb{R}^n.
+    \end{equation}
+\end{definicion}
+
+
+\begin{observacion}\label{obs:desc}
+    Dado $x = (x_1,x_2,\ldots, x_n) \in \mathbb{R}^n$ se tiene que 
+    \begin{equation}\label{eq:gauss}
+        G(x_1,x_2,\ldots, x_n) = e^{- \pi x_1^2} \cdot e^{- \pi x_2^2} \cdots e^{- \pi x_n^2} = G(x_1)\cdot G(x_2) \cdots G(x_n)
+    \end{equation}
+\end{observacion}
+
+
+
+\begin{lema}\label{lem:leam}
+$G$ cumple
+\begin{equation}
+    \int_{\mathbb{R}^n} G(x)\, \, dx = 1 .
+\end{equation}
+\end{lema}
+\begin{proof}
+Por un lado sabemos que
+\begin{equation}
+   \widehat{G}(0,0, \ldots, 0) = \int_{\mathbb{R}^n} G(x)\, \, dx   .
+\end{equation}
+
+\noindent Por otro, atendiendo a la expresión \eqref{eq:gauss} y a la Proposición (\ref{prop:div}), se tiene que, 
+\begin{equation}
+    \widehat{G}(0, \ldots, 0) = \widehat{G}(0) \cdots \widehat{G}(0),
+\end{equation}
+
+\noindent luego podemos reducirnos al caso $n=1$.
+
+\noindent Para ello, haremos un cálculo previo que nos servirá en nuestro objetivo.
+\begin{equation}
+    \int_{\mathbb{R}^2}e^{- \pi (x^2+y^2)} \, d(x,y) = \int_{-\pi}^{\pi}\int_{0}^{\infty}\rho e^{- \pi \rho^2} \, d \rho d\theta = \int_{-\pi}^{\pi} \frac{1}{2 \pi}d\theta = 1.
+\end{equation}
+Finalmente, 
+\begin{equation}
+\int_{\mathbb{R}^2}e^{- \pi (x^2+y^2)} \, d(x,y) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} e^{- \pi x^2}e^{- \pi y^2} \, dy dx = \int_{-\infty}^{\infty}e^{- \pi x^2}  \, dx\int_{-\infty}^{\infty} e^{- \pi y^2} \, dy = \left( \int_{-\infty}^{\infty} G(t) \, dt \right)^2.
+\end{equation}
+
+\noindent De donde finalmente se deduce que para $G: \mathbb{R}  \rightarrow \mathbb{R}$
+\begin{equation}
+    \left( \int_{-\infty}^{\infty} G(t) \, dt \right)^2  = 1,
+\end{equation}
+y por ende 
+\begin{equation}
+    \widehat{G}(0) = \left( \int_{-\infty}^{\infty} G(t) \, dt \right)  = 1,
+\end{equation}
+
+\noindent concluyendo lo que queríamos.
+
+
+
+
+\end{proof}
+
+
+
 \begin{proposicion}
-    Sea $f$
+    $G$ cumple la identidad 
+    \begin{equation}
+        \widehat{G} = G.
+    \end{equation}
 \end{proposicion}
 
 
 
-\begin{proposicion}
-    Sea $f$
+
+\begin{proof}
+Por un lado, atendiendo a la expresión \eqref{eq:gauss} y a la Proposición (\ref{prop:div}), se tiene que, para $y = (y_1,y_2, \ldots, y_n)$,
+
+\begin{equation}
+    \widehat{G}(y_1,y_2, \ldots, y_n) = \widehat{G}(y_1) \cdots \widehat{G}(y_n). 
+\end{equation}
+\noindent Luego podemos reducirnos al caso n = 1.
+\noindent Como 
+\begin{equation}
+    G'(x) = -2 \pi x G(x) \quad \forall x \in \mathbb{R},
+\end{equation}
+y además 
+\begin{equation}
+    \int_{\mathbb{R}}|G'(x)|dx = 2\int_0^\infty 2\pi x e^{-\pi x^2} \, dx = 2,
+\end{equation}
+\noindent el Teorema (\ref{teo:der_trans}) garantiza que $\widehat{G}$ es derivable en $\mathbb{R}$. También, 
+\begin{equation}
+    \widehat{G}'(y) = (-2 \pi i x G) \, \, \widehat{}\, \, (y) = i\widehat{G'}(y) = -2\pi y\widehat{G}(y) \quad \forall y \in \mathbb{R}.
+\end{equation}
+Luego $\widehat{G}$ es solución de la ecuación diferencial 
+\begin{equation}
+    f'(y) = -2\pi y f(y).
+\end{equation}y, por tanto, 
+\begin{equation}
+    \widehat{G}(y) = ce^{-\pi y^2} = c G(y) \quad \forall y \in \mathbb{R},
+\end{equation}
+y usando el Lema (\ref{lem:leam})
+\begin{equation}
+    c = \widehat{G}(0) = \int_{\mathbb{R}}G(x) dx = 1.
+\end{equation}
+Obtenemos finalmente $\widehat{G} = G$.
+
+
+\noindent Volvemos ahora al caso general. Sea  $y = (y_1,y_2,  \ldots, y_n)$,  se verifica
+
+\begin{equation*}
+        \widehat{G}(y) =  \prod_{j=1}^{n}\widehat{f}(y_j) =  \prod_{j=1}^{n}\widehat{f}(y_j)  = G(y). \qedhere
+\end{equation*} 
+\end{proof}
+
+\begin{observacion}
+  El proceso de filtrado de imágenes se emplea en el ámbito del procesamiento de imágenes con el objetivo de mejorar su calidad o de extraer información pertinente de las mismas. Consiste en aplicar diferentes operaciones matemáticas a los píxeles de una imagen con el fin de resaltar ciertas características, eliminar ruido o suavizar detalles no deseados. Este  filtro recibe el nombre de núcleo o (kernel). Dentro del filtrado de imágenes, el núcleo gaussiano, que aparecerá con frecuencia en los siguientes ejemplos, es usado frecuentemente.
+    Este núcleo nace de la discretización de la función gaussiana 
+    \begin{equation}
+        G_{\sigma}(x,y) = \frac{1}{2\pi \sigma^2}e^{-\frac{x^2+y^2}{2 \sigma^2}} \quad \sigma \in \mathbb{R}^+.
+    \end{equation}
+    La distribución es extensamente conocida, y decae a medida que nos alejamos de su centro. Por tanto, como filtro discreto, le da más peso a los píxeles centrales y menos a los vecinos, ``difuminando'' los píxeles de la imagen. Por esto, es denominado un filtro de paso bajo o suavizado. El parámetro $\sigma$ controla la cantidad de suavizado.
+    Nótese que 
+    \begin{equation}\label{flip}
+        G_{\sigma}(x) = \frac{1}{2\pi \sigma^2}H_{\frac{1}{\sqrt{\pi 2 \sigma^2}}}G(x) \quad \forall x \in \mathbb{R}^2.
+    \end{equation}   
+    De~\eqref{flip} deducimos las siguientes características  que simplifican el trabajo con la función gaussiana y contribuyen a su amplia utilización. 
+    \begin{itemize}
+        \item La Transformada de Fourier de una función Gaussiana es otra función Gaussiana
+         \begin{equation}
+        \widehat{G_{\sigma}}(y) = \frac{1}{2\pi \sigma^2} (2\pi \sigma^2)\widehat{G}((2\pi \sigma^2 y)) =G(\sqrt{2\pi \sigma^2}y) = G_{\sigma'}(y),
+    \end{equation}
+        donde $\sigma' = \frac{1}{2 \pi \sigma}$.
+        \item Es separable, es decir se puede dividir en el producto de dos Gaussianas 1D.
+    \end{itemize}
+\end{observacion}
+\noindent Cuando nos refiramos a la derivada del núcleo gaussiano, será una discretización de la derivada de la función gaussiana salvo constante.
+
+\section{Teorema de Inversión}
+A continuación abordamos el Teorema de Inversión que nos permitirá recuperar la función a partir de su Transformada de Fourier bajo ciertas hipótesis. 
+
+\begin{teorema}[de Inversión]\label{teo:inv} Sea $f \in \mathscr{L}^1(\mathbb{R}^n)$ y supongamos que $\widehat{f}    \in \mathscr{L}^1(\mathbb{R}^n)$. Entonces
+\begin{equation}\label{eq:teoinv}
+    f(x) = \int_{\mathbb{R}^n}\widehat{f}(y)e^{2\pi i \langle x, y \rangle} \, dy \quad \text{para casi todo} \, x \in \mathbb{R}^n.
+\end{equation}
+   
+\end{teorema}
+
+\begin{proof}
+Sea la función G definida en (\ref{gauss}). Dado $x \in \mathbb{R}^n$, probaremos primero que 
+\begin{equation}\label{eq:primero}
+   \underset{\substack{m \rightarrow \infty}}{\lim}\int_{\mathbb{R}^n}\widehat{f}(y)e^{2\pi i \langle x, y \rangle}G\left(\frac{1}{m}y\right) \, dy = \int_{\mathbb{R}^n}\widehat{f}(y)e^{2\pi i \langle x, y \rangle} \, dy .
+\end{equation}
+Para ello, observamos los siguientes puntos:
+\begin{itemize}
+    \item $\underset{\substack{m \rightarrow \infty}}{\lim}\, \widehat{f}(y)e^{2\pi i \langle x, y \rangle}G\left(\frac{1}{m}y\right)  = \widehat{f}(y)e^{2\pi i \langle x, y \rangle}$,
+    \item $|\widehat{f}(y)e^{2\pi i \langle x, y \rangle}G\left(\frac{1}{m}y\right)| \leq |\widehat{f}(y)| \quad \forall y \in \mathbb{R}^n, \forall m \in \mathbb{N}$,
+    \item $|\widehat{f}|$ es por hipótesis integrable en $\mathbb{R}^n$.
+\end{itemize}
+
+\noindent Aplicando el Teorema de la convergencia dominada se concluye~\eqref{eq:primero}.
+
+\noindent Por otro lado, usando el Lema \ref {lem:leam} y el Teorema \ref{teo:cambio}, se tiene que
+\begin{align}
+& \int_{\mathbb{R}^n}\widehat{f}(y)e^{2\pi i \langle x, y \rangle}G\left(\frac{1}{m}y\right) \, dy - f(x) = \\
+& = \int_{\mathbb{R}^n}\widehat{f}(y)e^{2\pi i \langle x, y \rangle}G\left(\frac{1}{m}y\right) \, dy - \int_{\mathbb{R}^n}G(y)f(x)\, dy \\
+& = \int_{\mathbb{R}^n}\widehat{ \tau_{-x}f}(y)G\left(\frac{1}{m}y\right) \, dy - \int_{\mathbb{R}^n}G(y)f(x)\, dy \\
+& = \int_{\mathbb{R}^n} \tau_{-x}f(y)\widehat{G} \left(\frac{1}{m}y\right) \, dy - \int_{\mathbb{R}^n}G(y)f(x)\, dy \\
+& = \int_{\mathbb{R}^n} \tau_{-x}f(y) m^mG \left(my\right) \, dy - \int_{\mathbb{R}^n}G(y)\, dy \\
+& = \int_{\mathbb{R}^n}[ f(\frac{y}{m}+x)-f(x)] G \left(y\right)\, dy.
+\end{align}
+Luego
+\begin{equation}
+    \left|\int_{\mathbb{R}^n}\widehat{f}(y)e^{2\pi i \langle x, y \rangle}G\left(\frac{1}{m}y\right) \, dy - f(x)\right| \leq  \int_{\mathbb{R}^n}\left|f(\frac{y}{m}+x)-f(x) \right| G \left(y\right)\, dy.
+\end{equation}
+Integrando con respecto a $x \in \mathbb{R}^n$ se tiene
+\begin{align}
+\int_{\mathbb{R}^n}\left|\int_{\mathbb{R}^n}\widehat{f}(y)e^{2\pi i \langle x, y \rangle}G\left(\frac{1}{m}y\right) \, dy - f(x)\right| \, dx &\leq \int_{\mathbb{R}^n}\int_{\mathbb{R}^n}\left|f(\frac{y}{m}+x)-f(x) \right| G \left(y\right)\, dx dy \nonumber \\
+&= \int_{\mathbb{R}^n} w_1f\left(\frac{1}{m}y\right)G(y)\, dy.
+\end{align}
+Recurriendo de nuevo al Teorema de la convergencia dominada, probaremos que 
+\begin{equation}
+    \lim_{m \to \infty}  \int_{\mathbb{R}^n} w_1f\left(\frac{1}{m}y\right)G(y)\, dy = 0.
+\end{equation}
+Observamos los siguientes puntos:
+\begin{itemize}
+    \item $\underset{\substack{m \rightarrow \infty}}{\lim}\, w_1f\left(\frac{1}{m}y\right)G(y)  = 0$,
+    \item $w_1f\left(\frac{1}{m}y\right)G(y) \leq 2||f||_1G(y) \quad \forall y \in \mathbb{R}^n, \forall m \in \mathbb{N}$,
+    \item La función $||f||_1G$ es integrable en $\mathbb{R}^n$.
+\end{itemize}
+Por lo que se verifican todas las hipótesis para poder aplicar de nuevo el Teorema de la convergencia dominada para obtener que
+\begin{equation}
+    \lim_{m \to \infty}\int_{\mathbb{R}^n}\left|\int_{\mathbb{R}^n}\widehat{f}(y)e^{2\pi i \langle x, y \rangle}G\left(\frac{1}{m}y\right) \, dy - f(x)\right| \, dx = 0.
+\end{equation}
+Esto, junto con~\eqref{eq:primero}, nos permite concluir que 
+\begin{equation*}
+    \int_{\mathbb{R}^n}\widehat{f}(y)e^{2\pi i \langle x, y \rangle} \, dy =f(x) \quad c.p.d. \,\, \text{en}\,\, {\mathbb{R}^n}. \qedhere
+\end{equation*}
+    
+\end{proof}
+
+
+\begin{corolario}
+    La fórmula que aparece en~\eqref{eq:teoinv}  se cumple para cualquier punto en el que $f$ es continua. 
+\end{corolario}
+\begin{proof}
+    Dado $a \in \mathbb{R}$, supongamos que f es continua en $a$ y razonemos por reducción al absurdo.
+    Si $F(a)\neq f(a)$, entonces $\exists \delta \in \mathbb{R^+}$ tal que $F(x)\neq f(x) \, \forall x \in ]a-\delta, a+\delta[$, por ser $F$ y $f$ funciones continuas en el punto $a$.
+    Como consecuencia, existiría un conjunto de medida no nula $]a-\delta, a+\delta[$ en el que no se verifica~\eqref{eq:teoinv} contrariando lo obtenido en el Teorema \ref{teo:inv}.
+\end{proof}
+
+
+\begin{observacion}
+   El Teorema de Inversión afirma que 
+   \begin{equation}
+       f(x) = \widehat{\widehat{f}(}-x )\,\, c.p.d \,\, \text{en} \,\, \mathbb{R}^n.
+   \end{equation}
+Y como la función que aparece en la derecha es continua en $\mathbb{R}^n$, deducimos que $f$ no puede estar acotada en un entorno reducido del punto y ser discontinua en este. ¿?
+\end{observacion}
+
+\noindent Es interesante puntualizar que la condición de que la Transformada de Fourier sea integrable, es bastante restrictiva y en general no será cierta.
+
+\noindent Sin embargo en el ámbito discreto, como es de esperar, podremos recuperar cualquier señal a partir de la Trasformada usando la Inversa de la Transformada de Fourier Discreta (IDFT). 
+
+
+
+
+
+\section{Teorema de Unicidad}
+El Teorema de Unicidad sugiere que la Transformada de Fourier $\widehat{f}$ puede interpretarse como el código genético de la función $f$. En efecto, si dos funciones integrables en $\mathbb{R}^n$ tienen la misma Transformada de Fourier, esto implicará que son idénticas salvo en un conjunto de medida nula.
+Por tanto, cabe pensar que la Transformada de Fourier, en cierto sentido, sintetiza la función original.
+
+
+
+
+
+\begin{teorema}(Teorema de Unicidad).
+Sean $f,g \in \mathscr{L}^1(\mathbb{R}^n)$ y supongamos que $\widehat{f}(y) = \widehat{g}(y)$ para todo $ y \in \mathbb{R}^n$. Entonces $f = g$ c.p.d.  en $\mathbb{R}^n$.
+\end{teorema}
+
+\begin{proof}
+La prueba se deduce del Teorema de Inversión.
+
+\noindent Si $f,g \in \mathscr{L}^1(\mathbb{R}^n)$, entonces $f-g \in \mathscr{L}^1(\mathbb{R}^n)$ con $\widehat{f}(y) - \widehat{g}(y) = \widehat{f-g}(y) = 0 \quad \forall y \in \mathbb{R}^n$.
+Por tanto, el Teorema de Inversión es aplicable a la función $f-g$ y deducimos que
+\begin{equation}
+    f(x)-g(x) = \int_{\mathbb{R}^n}(\widehat{f-g})(y)e^{2 \pi i\langle x, y \rangle} \, dy = 0. \quad \text{c.p.d. en } \mathbb{R}^n ,
+\end{equation}
+de donde deducimos que $f=g$ c.p.d en $\mathbb{R}^n$.
+\end{proof}
+
+\section{Clase de Schwartz}
+Tal como se ha señalado previamente, existen referencias, tales como \cite{LibroSchwartz} donde se desarrolla la Transformada de Fourier en una clase más restringida que $\mathscr{L}^1(\mathbb{R}^n)$, el espacio de funciones de Schwartz $\mathscr{S}(\mathbb{R}^n)$,
+que resulta ser un entorno particularmente adecuado para esta. Es por ello por lo que estudiaremos algunas características de este espacio, así como la razón de que el comportamiento de la Transformada sea especialmente bueno en él.
+
+\begin{definicion}\label{def111}
+
+\noindent El espacio de Schwartz, denotado por \( \mathscr{S}(\mathbb{R}^n) \), se define como el conjunto de todas las funciones \( f: \mathbb{R}^n \rightarrow \mathbb{C} \) que son infinitamente diferenciables, de modo que para cada par de multi-índices $\alpha$ y $\beta \in (\mathbb{N}\cup 0)^n$, se tiene que
+\[
+\rho_{\beta, \alpha}(f) := \sup_{x \in \mathbb{R}^n} |x^\beta D_\alpha f(x)| < \infty.
+\]
+\end{definicion}
+\begin{observacion}
+    Las funciones de \( \mathscr{S}(\mathbb{R}^n) \) son funciones infinitamente diferenciables cuyas sucesivas derivadas decrecen más rápido en infinito que cualquier polinomio.
+\end{observacion}
+
+\noindent Es posible proporcionar otra definición utilizando un único multi-índice.
+
+\begin{definicion}
+Sea \(f \in C^{\infty}(\mathbb{R}^n)\). Se dice que \(f\) pertenece al espacio de Schwartz si es indefinidamente derivable y para cada \(m \in \mathbb{N}\) y cada multi-índice \(\alpha \in (\mathbb{N}\cup \{0\})^n\) se cumple que
+\[
+\rho_{m, \alpha}(f) := \sup_{x \in \mathbb{R}^n} (1+\|x\|^2)^m |D_\alpha f(x)|  < \infty.
+\]
+\end{definicion}
+\noindent Es claro que ambas definiciones son equivalentes. Se ha usado a propósito la misma notación para los dos supremos.
+
+\begin{proposicion}\label{profdif1}
+    Si $f \in \mathscr{S}(\mathbb{R}^n)$. Entonces $f \in \mathscr{L}^1(\mathbb{R}^n)$.
 \end{proposicion}
 
+\begin{proof}
+Tomamos $\alpha = 0$. Como $f \in \mathscr{S}(\mathbb{R}^n)$, se tiene que 
+\begin{equation}
+    |f(x)|(1+\|x\|^2)^n \leq \rho_{n,\alpha},
+\end{equation}
+Usando coordenadas polares se tiene que
+\begin{equation*}
+\begin{aligned}
+   \int_{\mathbb{R}^n}|f(x)| \, dx &= \int_{\mathbb{R}^n}\frac{\rho_{n,\alpha}}{(1+\|x\|^2)^n} \, dx = \rho_{n,\alpha}w_{n-1}\int_{0}^{\infty} \frac{r^{n-1}}{(1+r^2)^n} \, dr < \infty,
+   \end{aligned}
+\end{equation*} 
+\noindent donde $w_{n-1}$ denota el área de $\mathbb{S}^{n-1}$.
+\end{proof}
+
+\begin{proposicion}\label{prodif2}
+    Si $f,g \in \mathscr{S}(\mathbb{R}^n)$, entonces se tiene que 
+    \begin{itemize}
+        \item $f+g \in \mathscr{S}(\mathbb{R}^n)$,
+        \item $\gamma f \in \mathscr{S}(\mathbb{R}^n) \quad \forall \gamma \in \mathbb{C}$.
+    \end{itemize}
+\end{proposicion}
+
+\begin{proof}
+Probaremos a continuación los dos apartados.
+    \begin{itemize}
+        \item Veamos que $f+g \in \mathscr{S}(\mathbb{R}^n)$. Para cada par de multi-índices $\alpha, \beta \in (\mathbb{N} \cup {0})^n$, se tiene que 
+        \begin{equation}
+            D_{\alpha}(f+g) =   D_{\alpha}(f)+ D_{\alpha}(g).
+        \end{equation}
+        Luego
+       \begin{align}
+        |x^{\beta}D_{\alpha}(f+g)| 
+        &= |x^{\beta}||D_{\alpha}(f)+ D_{\alpha}(g)| \\
+        &\leq |x^{\beta}||D_{\beta}(f)| + |x^{\beta}||D_{\beta}(g)| \\
+        &\leq \rho_{\beta,\alpha}(f)+\rho_{\beta,\alpha}(g).
+        \end{align}
+        Y, por tanto, 
+        \begin{equation}
+            \rho_{\beta,\alpha}(f+g) \leq \rho_{\beta,\alpha}(f)+\rho_{\beta,\alpha}(g) < \infty.
+        \end{equation}
+        Concluimos que $f+g \in \mathscr{S}(\mathbb{R}^n)$.
+
+        \item Sea $\gamma \in \mathbb{C}$. Veamos que $\gamma f \in \mathscr{S}(\mathbb{R}^n)$.  Para cada par de multi-índices $\alpha, \beta \in (\mathbb{N} \cup {0})^n$, se tiene que 
+        \begin{equation}
+            D_{\alpha}(\gamma f) =  \gamma D_{\alpha}(f).
+        \end{equation}
+        Luego
+       \begin{equation}
+        |x^{\beta}D_{\alpha}(\gamma f)| 
+        = |x^{\beta}\gamma D_{\alpha}(f)|
+        = |\gamma||x^{\beta}D_{\alpha}(f)| 
+        \leq |\gamma|\rho_{\beta,\alpha}(f).
+        \end{equation}
+        Y, por tanto, 
+        \begin{equation}
+        \rho_{\beta,\alpha}(\gamma f) \leq |\gamma|\rho_{\beta,\alpha}(f) < \infty,
+        \end{equation}
+        obteniendo que $\gamma f \in \mathscr{S}(\mathbb{R}^n)$. \qedhere
+
+
+        
+        \end{itemize}        
+\end{proof}
     
 
+
+
+\begin{observacion}
+\noindent Las proposiciones \ref{profdif1} y \ref{prodif2} muestran que el espacio $\mathscr{S}(\mathbb{R}^n)$ es un subespacio vectorial de  $\mathscr{L}^1(\mathbb{R}^n)$.
+Consecuentemente, la teoría desarrollada para $\mathscr{L}^1(\mathbb{R}^n)$ se aplica directamente a este espacio.
+\end{observacion}
+
+\begin{proposicion}\label{propopes}
+    Si $f \in \mathscr{S}(\mathbb{R}^n)$. Entonces $\widehat{f} \in \mathscr{S}(\mathbb{R}^n)$.
+\end{proposicion}
+
+\begin{proof}
+    Probaremos primero que $\widehat{f}$ es infinitamente derivable. Como puede intuir el lector, pretendemos usar el Teorema \ref{teo:der_trans}. Para ello tenemos que demostrar que si $f \in \mathscr{S}(\mathbb{R}^n)$, ser verifican las hipótesis de este teorema.
     
+\noindent  Sea $\alpha = (\alpha, \ldots \alpha_n)$, atendiendo a la equivalencia de las dos definiciones de $\mathscr{S}(\mathbb{R}^n)$ proporcionadas se tiene que 
+\begin{equation}
+\begin{aligned}
+   \int_{\mathbb{R}^n}|x^{\alpha}f(x)| \, dx 
+   &< \infty.
+\end{aligned}
+\end{equation}
+\noindent Por tanto, se tiene que $\widehat{f}$ es infinitamente derivable y además
+      \begin{equation}
+     D_{\alpha}\widehat{f}(y) = ((-2 \pi i)^{|\alpha|}x^{\alpha} f (x))\,\,\widehat{  } \,\, (y) \quad \forall y \in \mathbb{R}^n.
+   \end{equation}
+Definimos la función 
+\begin{equation}
+g(x) = (-2 \pi i)^{|\alpha|}x^{\alpha} f (x) \quad \forall x \in \mathbb{R}^n.
+\end{equation}
+
+\noindent Dado $\beta \in  (\mathbb{N} \cup {0})^n $,
+    \begin{equation}
+     y^{\beta}D_{\alpha}\widehat{f}(y) =  y^{\beta}\widehat{g(x)}(y) = \widehat{D_{\beta}g(x)}(y) \frac{1}{(2 \pi i)^{|\beta|}},
+    \end{equation}
+de donde se tiene que $y \mapsto y^{\beta}D_{\alpha}\widehat{f}$ está acotada $\forall \beta \in  (\mathbb{N} \cup {0})^n $, ya que es la Transformada de Fourier de una función integrable en $\mathbb{R}^n$. 
+Como consecuencia deducimos que  $\widehat{f} \in \mathscr{S}(\mathbb{R}^n)$. 
+\end{proof} 
 
 
 
 
+
+\begin{observacion}
+Trabajando el concepto de la Transformada
+de Fourier en $\mathscr{S}(\mathbb{R}^n)$, tenemos garantizado
+de antemano el buen planteamiento de su construcción inversa, ya que para poder aplicar el Teorema de Inversión a una función $f$ necesitábamos que $\widehat{f}$ fuera integrable, una condición que gracias a la proposición anterior se cumple para  $f \in \mathscr{S}(\mathbb{R}^n)$.
+\end{observacion}
+
+\begin{proposicion}
+    El operador
+    \begin{equation}
+        \widehat{} :  \mathscr{S}^1(\mathbb{R}^n) \rightarrow \mathscr{S}^1(\mathbb{R}^n)
+    \end{equation}
+define una biyección.
+\end{proposicion}
+\begin{proof}
+\noindent Sabemos por la Proposición \ref{propopes} que  $\widehat{f} \in \mathscr{S}(\mathbb{R}^n)$ para cada $f \in \mathscr{S}(\mathbb{R}^n)$. Además,
+\begin{itemize}
+    \item Es inyectivo como consecuencia del Teorema de Unicidad. Esto es: si  $\widehat{f}=0$, se tiene que $f=0$ c.p.d.
+    \item Es sobreyectivo por el Teorema de Inversión.  Dada una función $g \in \mathscr{S}(\mathbb{R}^n)$, definimos la función $f = \widetilde{\widehat{g}}$, de tal manera que por el Teorema de Inversión se tiene justamente que $\widehat{f}= g$.
+\end{itemize}
+
+\end{proof}
+
+
+
+
+
+
+\noindent La familia numerable de seminormas 
+\[\sup_{|\alpha|\leq N} \sup_{x \in \mathbb{R}^n}(1+||x||_2^2)^k |D_\alpha f(x)| \quad (f\in \mathscr{S}(\mathbb{R}^d),k,N \in \mathbb{N}),\]
+da lugar a una topología en $S(\mathbb{R}^n)$, localmente convexa y metrizable, generada por intersecciones finitas de bolas definidas con respecto a tales seminormas. El dual topológico de $S(\mathbb{R}^n)$, denotado $S'(\mathbb{R}^n)$, está formado por todos los funcionales lineales y continuos definidos sobre $S(\mathbb{R}^n)$, y sus elementos reciben el nombre de distribuciones temperadas. En este espacio se puede dar una definición de la Transformada de Fourier y probar que la Transformada
+de Fourier de una distribución temperada es otra distribución temperada. También se puede probar que la Transformada de Fourier es un homeomorfismo lineal de
+$S(\mathbb{R}^n)$ en $S(\mathbb{R}^n)$, y de $S'(\mathbb{R}^n)$ en $S'(\mathbb{R}^n)$. Esta aproximación, aunque escapa del alcance del presente análisis, se presenta como una línea prometedora para trabajo futuro.
 
 
 

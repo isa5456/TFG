@@ -11,10 +11,10 @@ La Transformada Rápida de Fourier (FFT) es un algoritmo eficiente para calcular
 \noindent Su impacto en la era moderna es incalculable, prueba de ello es su inclusión por la revista IEEE de Computación en Ciencia e Ingeniería como uno de  los 10 algoritmos más influyentes en el desarrollo y la práctica de la ciencia y la ingeniería en el siglo XX [ref]
 
 
-\noindent El capítulo comienza  contextualizando al lector con algunos referencias históricas del algoritmo.\noindent  Posteriormente avanzaremos con el desarrollo teórico que sustenta la FFT donde usaremos fundamentalmente la teoría desarrollada previamente. Este análisis  culminará con el estudio de la mejora en eficiencia en  comparación con el método directo y una implementación recursiva para un caso particular.
+\noindent El capítulo comienza  contextualizando al lector con algunos referencias históricas del algoritmo.  Posteriormente avanzaremos con el desarrollo teórico que sustenta la FFT donde usaremos fundamentalmente la teoría desarrollada previamente. Este análisis  culminará con el estudio de la mejora en eficiencia en  comparación con el método directo y una implementación recursiva para un caso particular.
 
 
-\noindent Para finalizar el capítulo se abordarán algunas de las aplicaciones en diversos campos, particularmente en el ámbito de visión por computador.Con esto se pretende convencer al lector de que la FFT se encuentra prácticamente en cualquier aplicación que involucre el análisis y procesamiento de señales.
+\noindent Para finalizar el capítulo se abordarán algunas de las aplicaciones en diversos campos, particularmente en el ámbito de visión por computador. Con esto se pretende convencer al lector de que la FFT se encuentra prácticamente en cualquier aplicación que involucre el análisis y procesamiento de señales.
 
 
 
@@ -36,7 +36,7 @@ Nos remontamos a 1945, año en el que finaliza la la Segunda Guerra Mundial tras
 
 \noindent Como resultado, Estados Unidos celebró conversaciones con los soviéticos y otras naciones con capacidad nuclear con el objetivo final de detener la carrera de armamento nuclear.
 
-\noindent Para hacerlo se trató de llegar a determinados acuerdos que prohibía la experimentación con energía nuclear.Sin embargo debido a la esperable desconfianza entre países, era necesario que cada nación tuviera la tecnología para identificar las pruebas nucleares realizadas por otros. 
+\noindent Para hacerlo se trató de llegar a determinados acuerdos que prohibían la experimentación con energía nuclear. Sin embargo debido a la esperable desconfianza entre países, era necesario que cada nación tuviera la tecnología para identificar las pruebas nucleares realizadas por otros. 
 
 \noindent Los hidrófonos podían detectarlas bajo el mar y los átomos residuales podían identificarse en el cielo desde pruebas en tierra. Pero detectar las pruebas subterraneas era todo un desafío.
 
@@ -47,15 +47,15 @@ Dentro de una señal compleja, hay muchas ondas sinusoidales de diferentes frecu
 
 \noindent No fue hasta 1960,cuando James Cooley y John Tukey  publicaron el algoritmo de FFT que reducía considerablemente el orden de complejidad de la DFT, pudiendo reducir el tiempo de cálculo de más de tres años a 35 minutos.
 
-\noindent Trágicamente, era demasiado tarde para firmar una prohibición de pruebas completa, y las pruebas nucleares fueron forzadas bajo tierra, donde las pruebas aumentaron a una notable tasa de alrededor de una vez por semana.
+\noindent Trágicamente, era demasiado tarde para firmar una prohibición de pruebas completa, y las pruebas nucleares fueron forzadas bajo tierra, donde aumentaron a una notable tasa de alrededor de una vez por semana.
 
-\noindent Desde entonces, la FFT ha encontrado nuevos usos en casi todas las aplicaciones de comunicaciones y señalización de datos Sin embargo, tenía el potencial de ser mucho mayor: casi fue el algoritmo que detuvo la carrera armamentista nuclear, si hubiera llegado solo unos años antes.
+\noindent Desde entonces, la FFT ha encontrado nuevos usos en casi todas las aplicaciones de comunicaciones y señalización de datos. Sin embargo, tenía el potencial de ser mucho mayor: casi fue el algoritmo que detuvo la carrera armamentista nuclear, si hubiera llegado solo unos años antes.
 
 
 \noindent Lo más fascinante es que la primera aparición de la Transformada Rápida de Fourier (FFT) data de 1807 del matemático Gauss.
 Sus intereses estaban en ciertos cálculos astronómicos (un área recurrente de aplicación de la FFT) relacionados con la interpolación de órbitas asteroidales a partir de un conjunto finito de observaciones equidistantes. Seguramente, la perspectiva de un cálculo manual laborioso y extenso era una buena motivación para el desarrollo de un algoritmo rápido. Sin embargo su trabajo no fue publicado y apareció únicamente en sus obras recopiladas como un manuscrito inédito  [ref].
 
-\noindent Algunos trabajos previos en los Cooley y Tukey se basaron se mencionan a continuación.
+\noindent Algunos trabajos previos en los que Cooley y Tukey se basaron se mencionan a continuación.
 
 \noindent Un método eficiente para el cálculo de las interacciones de un experimento factorial $2^m$ fue introducido por Yates[1]. La generalización a $3^m$ fue proporcionada por Box et al. [1]. Good [2] generalizó estos métodos y proporcionó algoritmos elegantes, para los cuales una clase de aplicaciones es el cálculo de series de Fourier.
 
@@ -156,7 +156,8 @@ La DFT de una $N$-tupla $f$ puede ser calculada en $T = O(N(\gamma_1 + \gamma_2 
 \begin{proof}
 
 La demostración consiste en un razonamiento recursivo. Se tiene que si $N = \gamma_1 \cdot \gamma_2 \cdot \ldots \cdot \gamma_m$ con $\gamma_1, \gamma_2, \ldots, \gamma_m$ dando $m$ pasos en el algoritmo anteriormente descrito se deduce que  $T=O(N(\gamma_1 + \gamma_2 + \ldots + \gamma_m))$.
-\textbf{NO ESTÁ BIEN}.
+
+\textbf{NO ESTÁ BIEN pero ns como hacerlo :}.
 Aplicaremos por tanto m veces el algoritmo descrito en [ref teorema anterior].Consideraremos en cada paso las variables $r_1$ y $r_2$ para una mayor claridad estas se irán renombrando en cada paso del algoritmo.Los índices $j_O,j_1,k_0,k_1$ serán los relativos al cálculo seguido en el caso anterior para la  factorización $N= r_1r_2$.
 
 \vspace{0.1cm}
@@ -247,7 +248,7 @@ Son números antiprimos el 1, 2, 4, 6, 12, 24, 36, 48, 60.
 
 
 \begin{proposicion}
-  \noindent Si $N = 2^{a_2}3^{a_3} \ldots p^{a_p}$ es la factorización prima de un número altamente compuesto, \textbf{entonces}:
+  \noindent Si $N = 2^{a_2}3^{a_3} \cdots p^{a_p}$ es la factorización prima de un número altamente compuesto, \textbf{entonces}:
 \end{proposicion}
 
 \begin{itemize}
@@ -268,7 +269,7 @@ Son números antiprimos el 1, 2, 4, 6, 12, 24, 36, 48, 60.
 
    \noindent Luego, 
     \begin{equation}
-        \frac{T}{N} = a_1\cdot p_1+a_2\cdot p_2+ \ldots a_m\cdot p_m
+        \frac{T}{N} = a_1\cdot p_1+a_2\cdot p_2+ \cdots + a_m\cdot p_m
     \end{equation}
 \end{proof}
 
@@ -366,7 +367,8 @@ Se puede observar en [ref] que solo están involucradas en el cálculo las dos u
 
 
 
-\section{Algoritmos}
+\section{Algoritmos} 
+\textbf{(no se cuantos poner ni como de profundos explicarlos)}
 Presentamos ahora algunos de los algoritmo más usados para la implementación de la transformada rápida de Fourier.
 
 \textbf{RADIX-2:}

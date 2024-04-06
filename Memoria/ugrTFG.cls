@@ -30,7 +30,7 @@
 }
 \ProcessOptions\relax
 
-\LoadClass[headings=normal, headsepline=false, cleardoublepage=empty, chapterprefix=false, appendixprefix=false,	listof=totoc, index=totoc, bibliography=totoc]{scrbook}
+\LoadClass[headings=normal, headsepline=false, cleardoublepage=empty, chapterprefix=true, appendixprefix=false,	listof=totoc, index=totoc, bibliography=totoc]{scrbook}
 
 
 % -------------------------------------------------------------------
@@ -55,19 +55,23 @@
 
 % Teoremas y entornos asociados
 
-  \newtheorem*{teorema*}{Teorema}
-  \newtheorem{teorema}{Teorema}[chapter]
-  \newtheorem{proposicion}{Proposición}[chapter]
-  \newtheorem{lema}{Lema}[chapter]
-  \newtheorem{corolario}{Corolario}[chapter]
+% Definir un contador que se reinicie con cada sección
+\newcounter{miContador}[section]
+\renewcommand{\themiContador}{\thesection.\arabic{miContador}}
 
-    \theoremstyle{definition}
-  \newtheorem{definicion}{Definición}[chapter]
-  \newtheorem{ejemplo}{Ejemplo}[chapter]
+% Configura los entornos para usar el contador 'miContador'
+\theoremstyle{plain}
+\newtheorem{teorema}[miContador]{Teorema}
+\newtheorem{proposicion}[miContador]{Proposición}
+\newtheorem{lema}[miContador]{Lema}
+\newtheorem{corolario}[miContador]{Corolario}
 
-    \theoremstyle{remark}
-  \newtheorem{observacion}{Observación}[chapter]
+\theoremstyle{definition}
+\newtheorem{definicion}[miContador]{Definición}
+\newtheorem{ejemplo}[miContador]{Ejemplo}
 
+\theoremstyle{remark}
+\newtheorem{observacion}[miContador]{Observación}
 \RequirePackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
 
 % Las tipografías elegidas para el documento, siguiendo la guía de estilo de la UGR, son las siguientes
@@ -75,7 +79,9 @@
 % Sans-serif font: 	Gill Sans (paquete cabin)
 % Monospace font: 	Inconsolata
 \RequirePackage[T1]{fontenc}
-\RequirePackage[sc, osf]{mathpazo} \linespread{1.05}         
+%\RequirePackage[sc, osf]{mathpazo}
+
+\linespread{1.05}         
 \IfFileExists{cabin.sty}{
   \RequirePackage[scaled=.95,type1]{cabin} 
 } %else
@@ -122,6 +128,7 @@
 \def\observacionautorefname{Observación}
 \def\ejemploautorefname{E.j.}
 
+
 % Pone automáticamente un parántesis para las ecuaciones
 \def\equationautorefname~#1\null{(#1)\null}
 
@@ -143,7 +150,10 @@
 \setkomafont{disposition}{\sffamily\bfseries}
 
 % Cambia el ancho de la cita. Al inicio de un capítulo podemos usar el comando \dictum[autor]{cita} para añadir una cita famosa de un autor.
+
 \renewcommand{\dictumwidth}{0.45\textwidth} 
+\setkomafont{chapter}{\normalfont\Huge\bfseries} % Fuente normal, tamaño grande, negrita
+
 
 \recalctypearea % Necesario tras definir la tipografía a usar.
 
@@ -252,3 +262,6 @@
       \miUniversidad
     \end{minipage}
   }
+
+% Puesto por Kiko: para que las ecuaciones align* se partan
+\allowdisplaybreaks

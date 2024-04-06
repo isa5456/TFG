@@ -16,7 +16,7 @@
 
 \newcommand{\miTitulo}{Título del trabajo\xspace}
 \newcommand{\miNombre}{Isabel María Moreno Cuadrado\xspace}
-\newcommand{\miGrado}{Doble grado en Matemáticas e Ingeniería Informática}
+\newcommand{\miGrado}{Doble Grado en Matemáticas e Ingeniería Informática}
 \newcommand{\miFacultad}{Facultad de Ciencias y Facultad de la ETSIIT \textbf{(falta logo)}}
 \newcommand{\miUniversidad}{Universidad de Granada}
 
@@ -37,8 +37,9 @@
 }
 
 
+\usepackage{upgreek}
 
-
+\usepackage{accents}
 \usepackage{pgfplots}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -48,6 +49,8 @@
 \usepackage{algpseudocode}
 \usepackage{mathrsfs}
 \usepackage{enumitem}
+\usepackage{csquotes}
+\usepackage{amsthm} % Para utilizar el comando \qedhere
 
 \begin{document}
 
@@ -72,8 +75,12 @@
 \mainmatter % activa la numeración de capítulos, resetea la numeración de las páginas y usa números arábigos
 
 \part{Parte Matemática} % Dividir un TFG en partes 
+
 \input{capitulos/introduccion1}
+\input{capitulos/Preliminares}
 \input{capitulos/capitulo-ejemplo}
+\input{capitulos/convolucion}
+\input{capitulos/transformada_L2}
 
 % Información relevante para la elaboración del trabajo.
 %\input{capitulos/documentacion}
@@ -112,8 +119,8 @@
 
 % BIBLIOGRAFÍA
 %-------------------------------------------------------------------
-
-\bibliographystyle{alpha-es} 
+\bibliographystyle{unsrt}
+%\bibliographystyle{alpha-es} 
 \begin{small} 
   \bibliography{library.bib}
 \end{small}
