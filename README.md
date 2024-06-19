@@ -1,11 +1,29 @@
-# TFG
+![Universidad de Granada](images/ugr.jpg)
 
-## Repositorio para desarrollar el trabajo de fin de grado.
+# Entrenamiento de Redes Convolucionales mediante la Transformada de Fourier
 
-El propósito de mi trabajo de fin de grado radica en el estudio y análisis avanzado de la transformada de Fourier, con un enfoque particular en el análisis de Fourier, sus propiedades y aplicaciones en el dominio de las señales y la imagen. A lo largo de este estudio, se pretende profundizar en los fundamentos teóricos que sustentan la transformada de Fourier, así como en sus diversas variantes, incluyendo la transformada de Fourier discreta.
+Este repositorio alberga el Trabajo de Fin de Grado (TFG) de Isabel María Moreno Cuadrado, presentado para la obtención del Doble Grado en Matemáticas e Ingeniería Informática por la Universidad de Granada.
 
-Un aspecto fundamental de mi investigación implica la aplicación de estos conocimientos en el ámbito de las redes convolucionales, una tecnología crucial en el procesamiento de imágenes y señales. Mi objetivo principal es explorar la posibilidad de desarrollar algoritmos que optimicen el rendimiento y la eficiencia de las redes convolucionales. Específicamente, se investigará la aplicación del teorema de convolución en la aceleración de los procesos de convolución, lo que podría resultar en un procesamiento más rápido y eficaz de datos en aplicaciones prácticas.
+## Descripción del Proyecto
 
-El objetivo final es contribuir al avance y la mejora de las redes convolucionales, lo que puede tener un impacto significativo en numerosas aplicaciones en áreas como la inteligencia artificial, la detección de patrones y el procesamiento de imágenes y señales.
+En este TFG, estructurado en dos partes distintas, una de índole matemática y otra de naturaleza informática, se exploran cuestiones vinculadas al campo del Aprendizaje Automático (DL), concretamente de las Redes Convolucionales (CNN), estableciendo una interconexión entre ambas áreas.
 
-En resumen, mi trabajo de fin de grado se propone profundizar en el análisis de Fourier avanzado y su aplicación en la optimización de redes convolucionales, con el fin de mejorar su velocidad y eficiencia, además de abordar otros aspectos relevantes de estas redes en la búsqueda de soluciones más efectivas en diversas áreas de la informática y la ingeniería.
+En la parte matemática de este TFG, correspondiente a la primera sección del mismo, se estudia en profundidad el análisis de Fourier en $\mathscr{L}^1(\mathbb{R}^n)$. El análisis de la Transformada de Fourier en este espacio, motivará  posteriormente la definición de su versión en el marco discreto, la Transformada de Fourier Discreta (DFT), cuyas propiedades y características más importantes emergerán de manera natural y estarán inspiradas por su similitud con las propiedades descritas en el ámbito continuo. Adicionalmente, se presentará en esta primera parte, la operación de convolución, que junto con el Teorema de Convolución consolidarán la base teórica para el desarrollo de la segunda parte de esta memoria.
+
+En la parte informática de este TFG, correspondiente a la segunda sección del mismo, se estudia un método alternativo para realizar la operación de convolución entre un núcleo y una imagen, usando el Teorema de Convolución y las propiedades de la DFT. Este método utiliza la Transformada Rápida de Fourier (FFT) para convertir los productos matriciales entre ambos operandos en productos puntuales. En esta parte, se realizan, por tanto, una serie de experimentos con objeto de evaluar la viabilidad del nuevo método de convolución propuesto, en problemas de Visión por Computador (VC).
+Posteriormente, se analiza la eficiencia de este algoritmo, lo cual requiere un estudio detallado de la eficiencia del algoritmo de la FFT. Finalmente, este algoritmo se termina incorporando en la arquitectura de una CNN, estudiando una nueva metodología propuesta en los trabajos futuros del artículo de Michael Mathieu, Mikael Henaff, Yann LeCun "Fast Training of Convolutional Networks through FFTs" para entrenar esta red íntegramente en el dominio de la frecuencia, y realizando posteriormente una comparativa de su rendimiento con el entrenamiento en una arquitectura clásica.
+
+Esta aproximación permite entrenar una CNN usando menos operaciones y, por lo tanto, representa un avance prometedor en la línea de investigación; aceleración del entrenamiento de una CNN. Este avance es especialmente relevante dado el aumento en el número de mapas de características en las CNN modernas, que además suelen trabajar con datos de grandes dimensiones. Esta metodología se alinea con la creciente concienciación sobre la ``Green AI'', que busca desarrollar tecnologías y técnicas de Inteligencia Aritificial sostenibles, promoviendo un enfoque más eficiente y responsable.
+
+Se muestra, por tanto, en el presente repostiorio, el código asociado a la parte experimental del TFG junto con la memoria del TFG.
+
+## ESTRUCTURA
+La estructura que sigue el Repositorio es la siguiente:
+
+1. En la carpeta docs se encuentran algunos artículos de referencia como el mencionado.
+2. En la carpeta Memoria se encuentra la memoria del TFG.
+3. En la carpeta de Notebooks se encuentran tres cuadernos.
+
+## AUTORA
+Isabel María Moreno Cuadrado
+     
