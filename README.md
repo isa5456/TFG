@@ -20,13 +20,19 @@ Esta aproximación permite entrenar una CNN usando menos operaciones y, por lo t
 
 Se muestra, por tanto, en el presente repostiorio, el código asociado a la parte experimental del TFG junto con la memoria del TFG.
 
-## ESTRUCTURA
-La estructura que sigue el Repositorio es la siguiente:
+## Estructura del Repositorio
 
-1. En la carpeta docs se encuentran algunos artículos de referencia como el mencionado.
-2. En la carpeta Memoria se encuentra la memoria del TFG.
-3. En la carpeta de Notebooks se encuentran tres cuadernos.
+El repositorio está organizado en varias carpetas, cada una destinada a un aspecto específico del proyecto:
 
-## AUTORA
+- **`docs`**: Contiene artículos de referencia y otros documentos importantes.
+
+- **`Memoria`**: Aloja la memoria del Trabajo de Fin de Grado (TFG).
+
+- **`Notebooks`**: Incluye tres cuadernos de Jupyter, detallando diferentes aspectos del proyecto:
+  1. **`MétodoDeConvolución`**: Estudio del nuevo método de convolución propuesto y su viabilidad.
+  2. **`Comparación de Convolución`**: Análisis comparativo de métodos de convolución.
+  3. **`EntrenamientoCNN`**: Comparación entre el entrenamiento en el dominio de la frecuencia y el entrenamiento tradicional de una CNN.
+     
+## AUTOR
 Isabel María Moreno Cuadrado
      
