@@ -1,4 +1,4 @@
-![Universidad de Granada](/ugr.jpg)
+![Universidad de Granada](/images/ugr.jpg)
 
 <p align="center">
   <h1>Entrenamiento de Redes Convolucionales mediante la Transformada de Fourier</h1>
