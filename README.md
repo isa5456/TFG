@@ -34,7 +34,7 @@ El repositorio está organizado en varias carpetas, cada una destinada a un aspe
   2. **`ComparacionMetodosConvolución`**: Análisis comparativo de métodos de convolución.
   3. **`EntrenamientoCNNMNIST`**: Comparación entre el entrenamiento en el dominio de la frecuencia y el entrenamiento tradicional de una CNN con el dataset MNIST.
   4. **`EntrenamientoCNNMNIST`**: Comparación entre el entrenamiento en el dominio de la frecuencia y el entrenamiento tradicional de una CNN con el dataset fashion-MNIST.
-  5. **OtrosExperimentos**: Otros experimentos que me han permitido comprender mejor el tema del TFG y que han formado parte del mismo en el Capítulo 11, 13 y 14 .
+  5. **`OtrosExperimentos`**: Otros experimentos que me han permitido comprender mejor el tema del TFG y que han formado parte del mismo en el Capítulo 11, 13 y 14 .
 - **`images`**: Imágenes usadas en los experimentos:
 
      
