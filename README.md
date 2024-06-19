@@ -1,6 +1,9 @@
 ![Universidad de Granada](/ugr.jpg)
 
-# Entrenamiento de Redes Convolucionales mediante la Transformada de Fourier
+<p align="center">
+  <h1>Entrenamiento de Redes Convolucionales mediante la FFT</h1>
+</p>
+
 
 Este repositorio alberga el Trabajo de Fin de Grado (TFG) de Isabel María Moreno Cuadrado, presentado para la obtención del Doble Grado en Matemáticas e Ingeniería Informática por la Universidad de Granada.
 
