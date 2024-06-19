@@ -27,7 +27,7 @@ El repositorio está organizado en varias carpetas, cada una destinada a un aspe
 
 - **`docs`**: Contiene artículos de referencia y otros documentos importantes.
 
-- **`Memoria`**: Aloja la memoria del Trabajo de Fin de Grado (TFG).
+- **`Memoria`**: Aloja la memoria del TFG.
 
 - **`Notebooks`**: Incluye tres cuadernos de Jupyter, detallando diferentes aspectos del proyecto:
   1. **`MétodoDeConvolución`**: Estudio del nuevo método de convolución propuesto y su viabilidad.
