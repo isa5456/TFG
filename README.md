@@ -31,8 +31,12 @@ El repositorio está organizado en varias carpetas, cada una destinada a un aspe
 
 - **`Notebooks`**: Incluye tres cuadernos de Jupyter, detallando diferentes aspectos del proyecto:
   1. **`MétodoDeConvolución`**: Estudio del nuevo método de convolución propuesto y su viabilidad.
-  2. **`Comparación de Convolución`**: Análisis comparativo de métodos de convolución.
-  3. **`EntrenamientoCNN`**: Comparación entre el entrenamiento en el dominio de la frecuencia y el entrenamiento tradicional de una CNN.
+  2. **`ComparacionMetodosConvolución`**: Análisis comparativo de métodos de convolución.
+  3. **`EntrenamientoCNNMNIST`**: Comparación entre el entrenamiento en el dominio de la frecuencia y el entrenamiento tradicional de una CNN con el dataset MNIST.
+  4. **`EntrenamientoCNNMNIST`**: Comparación entre el entrenamiento en el dominio de la frecuencia y el entrenamiento tradicional de una CNN con el dataset fashion-MNIST.
+  5. **`EntrenamientoCNNMNIST`**: Otros experimentos que me han permitido comprender mejor el tema del TFG y que han formado parte del mismo en el Capítulo 11, 13 y 14 .
+- **`images`**: Imágenes usadas en los experimentos:
+
      
 ## AUTOR
 Isabel María Moreno Cuadrado
